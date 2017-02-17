@@ -6,35 +6,55 @@
     android:layout_height="match_parent"
 
     tools:context="com.ase.team22.ihealthcare.FirstpageActivity">
+
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pagerpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
-
-
-    <Button
-        android:text="Signup"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:id="@+id/signup"
-        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/linearLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="18dp"
-        android:layout_marginStart="18dp" />
+        android:layout_alignParentStart="true">
 
-    <Button
-        android:text="Login"
-        android:layout_width="wrap_content"
+    </android.support.v4.view.ViewPager>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
-        android:id="@+id/login"
-        android:onClick="userLogin"
-        android:layout_above="@+id/signup"
-        android:layout_alignLeft="@+id/signup"
-        android:layout_alignStart="@+id/signup" />
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
+        <Button
+            android:id="@+id/signup"
+            android:layout_width="169dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="36dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
+            android:text="Signup"
+            style="@android:style/Widget.DeviceDefault.Light.Button"
+            android:layout_weight="0.50" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="169dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/signup"
+            android:layout_alignLeft="@+id/signup"
+            android:layout_alignStart="@+id/signup"
+            android:layout_marginBottom="23dp"
+            android:layout_marginRight="18dp"
+            android:onClick="userLogin"
+            android:text="Login"
+            android:layout_weight="0.42" />
+
+    </LinearLayout>
 
 </RelativeLayout>
 
