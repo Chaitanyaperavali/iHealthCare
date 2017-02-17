@@ -80,7 +80,7 @@
         android:background="@drawable/fb1"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/gsin"
-        android:layout_toEndOf="@+id/gsin"
         android:layout_marginLeft="39dp"
-        android:layout_marginStart="39dp" />
+        android:layout_marginStart="39dp"
+        android:layout_alignTop="@+id/gsin" />
 </RelativeLayout>
