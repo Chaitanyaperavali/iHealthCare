@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">iHealthCare</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="button">Button</string>
+    <string name="go_to_login_page">Go to Login Page</string>
 </resources>
