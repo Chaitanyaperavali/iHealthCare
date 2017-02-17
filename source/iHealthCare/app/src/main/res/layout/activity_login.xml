@@ -28,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/psw"
+        android:onClick="userLogin"
         android:layout_alignLeft="@+id/psw"
         android:layout_alignStart="@+id/psw"
         android:layout_marginTop="82dp"
@@ -83,7 +84,5 @@
         android:background="@drawable/fb1"
         android:layout_below="@+id/gsin"
         android:layout_alignLeft="@+id/gsin"
-        android:layout_alignStart="@+id/gsin"
-        android:layout_alignRight="@+id/email1"
-        android:layout_alignEnd="@+id/email1" />
+        android:layout_alignStart="@+id/gsin" />
 </RelativeLayout>
