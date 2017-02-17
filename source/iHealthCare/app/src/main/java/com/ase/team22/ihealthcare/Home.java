@@ -13,12 +13,6 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
     }
-    public void userLogin(View v){
-        if (v.getId()== R.id.login1)
-        {
-            Intent i = new Intent( Home.this,login.class);
-            startActivity(i);
-        }
 
-    }
+
 }
