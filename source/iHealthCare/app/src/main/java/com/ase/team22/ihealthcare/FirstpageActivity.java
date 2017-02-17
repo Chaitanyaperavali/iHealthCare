@@ -1,6 +1,7 @@
 package com.ase.team22.ihealthcare;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,13 @@ public class FirstpageActivity extends AppCompatActivity {
         adapter = new CustomSwipeAdapter(this);
         viewpager.setAdapter(adapter);
         //loading custom xml file
+    }
 
-}
+    public void userLogin(View view) {
+        if(R.id.login == view.getId()){
+            Intent intent = new Intent(this,login.class);
+            startActivity(intent);
+        }
+    }
 }
 

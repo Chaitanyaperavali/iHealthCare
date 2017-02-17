@@ -13,6 +13,6 @@
     <string name="drawer_item_help">Help</string>
     <string name="drawer_item_open_source">Open Source</string>
     <string name="drawer_item_contact">Contact</string>
-    <string name="drawer_item_collapsing_toolbar_drawer">CollapsingToolbar Drawer</string>
+    <string name="drawer_item_collapsing_toolbar_drawer">iHealthCare</string>
     <string name="lorem_ipsum">This is some dummy text written to showup on home page.</string>
 </resources>

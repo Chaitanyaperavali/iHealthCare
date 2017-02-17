@@ -28,20 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/psw"
+        android:onClick="userLogin"
         android:layout_alignLeft="@+id/psw"
         android:layout_alignStart="@+id/psw"
         android:layout_marginTop="82dp"
         android:id="@+id/login" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:id="@+id/fin"
-        android:layout_below="@+id/gsin"
-        android:layout_alignLeft="@+id/gsin"
-        android:layout_alignStart="@+id/gsin"
-        android:background="@drawable/fb1" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -78,10 +69,20 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="37dp"
         android:id="@+id/gsin"
         android:background="@drawable/gin"
         android:layout_below="@+id/login"
         android:layout_alignLeft="@+id/login"
         android:layout_alignStart="@+id/login" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:id="@+id/fin"
+        android:background="@drawable/fb1"
+        android:layout_below="@+id/gsin"
+        android:layout_alignLeft="@+id/gsin"
+        android:layout_alignStart="@+id/gsin" />
 </RelativeLayout>
