@@ -1,6 +1,11 @@
 package com.ase.team22.ihealthcare;
 
 import android.content.Intent;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -22,6 +27,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
 
 public class Home extends AppCompatActivity {
 
@@ -113,4 +119,6 @@ public class Home extends AppCompatActivity {
         outState = headerResult.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
+
+
 }
