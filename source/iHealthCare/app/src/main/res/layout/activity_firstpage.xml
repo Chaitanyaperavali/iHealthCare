@@ -38,6 +38,7 @@
             android:layout_marginLeft="18dp"
             android:layout_marginStart="18dp"
             android:text="Signup"
+            android:onClick="userRegister"
             style="@android:style/Widget.DeviceDefault.Light.Button"
             android:layout_weight="0.50" />
 
