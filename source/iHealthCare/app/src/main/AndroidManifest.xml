@@ -18,15 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".login" />
         <activity android:name=".Home" />
         <activity android:name=".UserDetails" />
-=======
-      <activity android:name=".login"></activity>
-      <activity android:name=".RegisterActivity">
-      <activity android:name=".Home"></activity>
->>>>>>> 412d2593c8b92ccea705306f0ae18b635a38faf1
+      <activity android:name=".RegisterActivity"/>
     </application>
 
 </manifest>
