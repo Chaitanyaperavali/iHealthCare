@@ -30,11 +30,11 @@ public class login extends AppCompatActivity {
 
     }
     public void googleSignin(View v){
-        if (v.getId()== R.id.gsin)
+       /* if (v.getId()== R.id.gsin)
         {
-            /*Intent i = new Intent( login.this,Home.class);
-            startActivity(i);*/
-        }
+            *//*Intent i = new Intent( login.this,Home.class);
+            startActivity(i);*//*
+        }*/
 
 
     }

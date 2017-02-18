@@ -23,7 +23,7 @@ import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
  */
 
 public class CustomSwipeAdapter extends PagerAdapter {
-    private int[] image_resources = {R.drawable.background,R.drawable.findadoctor,R.drawable.search,R.drawable.sermo_photo};
+    private int[] image_resources = {R.drawable.health,R.drawable.doc_appoint,R.drawable.docnearby,R.drawable.care1};
     private Context ctx;
     private LayoutInflater layoutInflater;
     private int imageWidth;

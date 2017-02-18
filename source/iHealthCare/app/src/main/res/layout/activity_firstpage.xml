@@ -4,14 +4,13 @@
     android:id="@+id/activity_firstpage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="com.ase.team22.ihealthcare.FirstpageActivity">
+    tools:context="com.ase.team22.ihealthcare.FirstpageActivity"
+    android:paddingBottom="0dp">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pagerpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_above="@+id/linearLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -23,9 +22,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1"
+        android:id="@+id/linearLayout"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/signup"
@@ -34,13 +34,16 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="36dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="18dp"
             android:layout_marginStart="18dp"
             android:text="Signup"
             android:onClick="userRegister"
-            style="@android:style/Widget.DeviceDefault.Light.Button"
-            android:layout_weight="0.50" />
+            style="@android:style/Widget.Holo.Light.Button"
+            android:layout_weight="0.34"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:fontFamily="sans-serif" />
 
         <Button
             android:id="@+id/login"
@@ -49,11 +52,14 @@
             android:layout_above="@+id/signup"
             android:layout_alignLeft="@+id/signup"
             android:layout_alignStart="@+id/signup"
-            android:layout_marginBottom="23dp"
             android:layout_marginRight="18dp"
             android:onClick="userLogin"
             android:text="Login"
-            android:layout_weight="0.42" />
+            android:layout_weight="0.42"
+            style="@android:style/Widget.Holo.Light.Button.Small"
+            android:textSize="18sp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" />
 
     </LinearLayout>
 
