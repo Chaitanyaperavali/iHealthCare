@@ -42,8 +42,8 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle(getString(R.string.drawer_item_collapsing_toolbar_drawer));
+        /*CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle(getString(R.string.drawer_item_collapsing_toolbar_drawer));*/
 
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -59,13 +59,15 @@ public class Home extends AppCompatActivity {
                 .withFullscreen(true)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_previous_reports).withIcon(FontAwesome.Icon.faw_gamepad),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_near_by_doctors).withIcon(FontAwesome.Icon.faw_eye),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_book_appointment).withIcon(FontAwesome.Icon.faw_eye),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_previous_reports).withIcon(FontAwesome.Icon.faw_line_chart).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_near_by_doctors).withIcon(FontAwesome.Icon.faw_stethoscope).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_book_appointment).withIcon(FontAwesome.Icon.faw_ambulance).withIdentifier(4),
                         new SectionDrawerItem().withName(R.string.drawer_item_section_header),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(5),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withEnabled(false),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn)
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(6),
+                        new SectionDrawerItem().withName(""),
+        new SecondaryDrawerItem().withName(R.string.drawer_item_logout).withIcon(FontAwesome.Icon.faw_sign_out).withIdentifier(7)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -76,18 +78,18 @@ public class Home extends AppCompatActivity {
                         //--> click on the footer
                         //those items don't contain a drawerItem
 
-                       /* if (drawerItem != null) {
+                        if (drawerItem != null) {
                             Intent intent = null;
-                            if (drawerItem.getIdentifier() == 1) {
-                                intent = new Intent(Home.this, CompactHeaderHome.class);
-                            } else if (drawerItem.getIdentifier() == 2) {
+                            if (drawerItem.getIdentifier() == 7) {
+                                intent = new Intent(Home.this, FirstpageActivity.class);
+                            } /*else if (drawerItem.getIdentifier() == 2) {
                                 intent = new Intent(Home.this, ActionBarActivity.class);
                             } else if (drawerItem.getIdentifier() == 3) {
-                                intent = new Intent(Home.this, MultiHome.class);
+                                intent = new Intent(Home.this, MultiHome.class);*/
                             if (intent != null) {
                                 Home.this.startActivity(intent);
                             }
-                        }*/
+                        }
 
                         return false;
                     }
@@ -97,18 +99,18 @@ public class Home extends AppCompatActivity {
                 .build();
 
         fillFab();
-        loadBackdrop();
+        //loadBackdrop();
     }
 
 
-    private void loadBackdrop() {
+   /* private void loadBackdrop() {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
         Glide.with(this).load("https://unsplash.it/600/300/?random").centerCrop().into(imageView);
-    }
+    }*/
 
     private void fillFab() {
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
-        fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_favorite).actionBar().color(Color.WHITE));
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_diagnosis);
+        fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_plus_circle).actionBar().color(Color.WHITE));
     }
 
     @Override
@@ -119,6 +121,9 @@ public class Home extends AppCompatActivity {
         outState = headerResult.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
-
-
+    public void newDiagnosis(View view){
+        if(view.getId() == R.id.fab_add_diagnosis){
+            //start new diagnosis
+        }
+    }
 }
