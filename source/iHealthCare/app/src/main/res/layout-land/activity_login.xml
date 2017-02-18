@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/pro6"
+    android:background="@drawable/login"
     tools:context="com.ase.team22.ihealthcare.login">
 
     <EditText
@@ -21,16 +21,6 @@
         android:layout_below="@+id/email1"
         android:layout_alignLeft="@+id/email1"
         android:layout_alignStart="@+id/email1" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:id="@+id/gsin"
-        android:background="@drawable/gin"
-        android:layout_below="@+id/login"
-        android:layout_alignLeft="@+id/login"
-        android:layout_alignStart="@+id/login" />
 
     <TextView
         android:text="EMAIL ADDRESS"
@@ -67,21 +57,25 @@
         android:text="login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/login"
         android:onClick="userLogin"
+        android:layout_marginTop="14dp"
+        android:id="@+id/button3"
         android:layout_below="@+id/tvpsw"
-        android:layout_alignLeft="@+id/tvpsw"
-        android:layout_alignStart="@+id/tvpsw" />
+        android:layout_alignLeft="@+id/psw"
+        android:layout_alignStart="@+id/psw"
+        android:layout_alignRight="@+id/tvemail"
+        android:layout_alignEnd="@+id/tvemail"
+        style="@android:style/Widget.Holo.Light.Button.Inset" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
         android:id="@+id/fin"
-        android:background="@drawable/fb1"
+        android:background="@drawable/facebook"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/gsin"
-        android:layout_marginLeft="39dp"
-        android:layout_marginStart="39dp"
-        android:layout_alignTop="@+id/gsin" />
+        android:layout_alignLeft="@+id/button3"
+        android:layout_alignStart="@+id/button3"
+        android:layout_marginBottom="21dp"
+        android:layout_alignRight="@+id/button3"
+        android:layout_alignEnd="@+id/button3" />
 </RelativeLayout>
