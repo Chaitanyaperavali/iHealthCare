@@ -82,7 +82,8 @@
                     android:elevation="0dp"
                     android:background="@color/colorPrimary"
                     android:textStyle="normal"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textColor="#FFFFFF"/>
 
                 <TextView
                     android:layout_width="wrap_content"

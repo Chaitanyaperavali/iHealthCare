@@ -123,7 +123,11 @@ public class Home extends AppCompatActivity {
     }
     public void newDiagnosis(View view){
         if(view.getId() == R.id.fab_add_diagnosis){
-            //start new diagnosis
+            getNextQuestion();
         }
+    }
+
+    public void getNextQuestion(){
+
     }
 }

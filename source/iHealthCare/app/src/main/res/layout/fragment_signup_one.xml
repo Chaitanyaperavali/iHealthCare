@@ -51,6 +51,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="25dp"
         android:layout_marginEnd="25dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFFFF"
         android:id="@+id/button_Ok"
         android:layout_marginTop="25dp"
         android:elevation="0dp"
