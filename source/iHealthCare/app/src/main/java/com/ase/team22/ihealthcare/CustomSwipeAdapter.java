@@ -57,12 +57,12 @@ public class CustomSwipeAdapter extends PagerAdapter {
             }
         });
         if(Resources.getSystem().getConfiguration().orientation == ORIENTATION_LANDSCAPE){
-            imageWidth=700;
+            imageWidth=830;
             imageHeight = 400;
         }
         else
         {
-            imageHeight=700;
+            imageHeight=720;
             imageWidth=500;
         }
         Bitmap image = BitmapFactory.decodeResource(imageView.getResources(),image_resources[position]);
