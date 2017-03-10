@@ -32,5 +32,12 @@ public class FirstpageActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    public void userRegister(View view) {
+        if(R.id.signup == view.getId()){
+            Intent intent = new Intent(this,RegisterActivity.class);
+            startActivity(intent);
+        }
+    }
 }
 

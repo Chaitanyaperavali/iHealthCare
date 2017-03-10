@@ -1,0 +1,107 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ase.team22.ihealthcare.FragmentSignupTwo">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Sign Up"
+                    android:id="@+id/lbl_Signup"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:singleLine="false"
+                    android:textColor="#415ca0"
+                    android:textStyle="normal|bold" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="First Name"
+                    android:ems="10"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/lbl_Signup"
+                    android:layout_marginTop="45dp"
+                    android:id="@+id/text_FirstName" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/text_LastName"
+                    android:hint="Last Name"
+                    android:layout_below="@id/text_FirstName"
+                    android:layout_marginTop="30dp"
+                    android:password="true"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/text_Password"
+                    android:hint="Password"
+                    android:layout_below="@id/text_LastName"
+                    android:layout_marginTop="30dp"
+                    android:password="true"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/text_ConfirmPassword"
+                    android:hint="Confirm Password"
+                    android:layout_below="@id/text_Password"
+                    android:layout_marginTop="30dp"
+                    android:password="true"/>
+
+                <Button
+                    android:text="Sign Up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_ConfirmPassword"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/button_Signup"
+                    android:layout_marginTop="45dp"
+                    style="@style/Widget.AppCompat.Button"
+                    android:elevation="0dp"
+                    android:background="@color/colorPrimary"
+                    android:textStyle="normal"
+                    android:textSize="18dp"
+                    android:textColor="#FFFFFF"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Invalid Password"
+                    android:id="@+id/lbl_Error"
+                    android:layout_marginTop="18dp"
+                    android:visibility="invisible"
+                    android:textColor="#e12c2c"
+                    android:singleLine="false"
+                    android:layout_below="@+id/button_Signup"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+
+    </RelativeLayout>
+

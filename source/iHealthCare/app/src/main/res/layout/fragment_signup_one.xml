@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ase.team22.ihealthcare.FragmentSignupOne">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Sign Up"
+        android:id="@+id/lbl_Signup"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:singleLine="false"
+        android:textColor="#415ca0"
+        android:textStyle="normal|bold" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/lbl_Signup"
+        android:layout_marginTop="45dp"
+        android:id="@+id/text_Email" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/text_Phone"
+        android:hint="Phone"
+        android:layout_below="@id/text_Email"
+        android:layout_marginTop="30dp"
+        android:password="true"/>
+
+    <Button
+        android:text="Ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_Phone"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFFFF"
+        android:id="@+id/button_Ok"
+        android:layout_marginTop="25dp"
+        android:elevation="0dp"
+        android:textStyle="normal|bold"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Invalid Email and Phonenumber"
+        android:id="@+id/lbl_Error"
+        android:layout_marginTop="18dp"
+        android:visibility="invisible"
+        android:textColor="#e12c2c"
+        android:singleLine="false"
+        android:layout_below="@+id/button_Ok"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
+
