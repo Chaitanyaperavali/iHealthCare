@@ -24,6 +24,27 @@ public class FirstpageActivity extends AppCompatActivity {
         adapter = new CustomSwipeAdapter(this);
         viewpager.setAdapter(adapter);
         //loading custom xml file
+   Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new MyTimerTask(),2000,4000);
+    }
+    public class MyTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            FirstpageActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(viewpager.getCurrentItem() == 0) {
+                        viewpager.setCurrentItem(1);
+                    } else if(viewpager.getCurrentItem() == 1) {
+                        viewpager.setCurrentItem(2);
+                        }
+                    else {
+                        viewpager.setCurrentItem(0);
+                    }
+                    }
+
+            });
+        }
     }
 
     public void userLogin(View view) {
@@ -40,4 +61,5 @@ public class FirstpageActivity extends AppCompatActivity {
         }
     }
 }
+
 
