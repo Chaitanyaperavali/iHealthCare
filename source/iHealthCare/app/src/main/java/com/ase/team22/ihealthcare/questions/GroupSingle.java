@@ -4,13 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.ase.team22.ihealthcare.Condition;
 import com.ase.team22.ihealthcare.R;
 
 import org.json.JSONArray;
@@ -29,10 +32,12 @@ public class GroupSingle extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "jsonResponse";
-
+    public static final String tag =  "GroupSingle";
     // TODO: Rename and change types of parameters
    private JSONObject jsonResponse;
     private RadioGroup radioGroup;
+    private RadioButton radioButton;
+    private String selectedAnswer;
     private OnFragmentInteractionListener mListener;
 
     public GroupSingle() {
@@ -48,9 +53,11 @@ public class GroupSingle extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static GroupSingle newInstance(JSONObject object) {
         GroupSingle fragment = new GroupSingle();
-        String jsonString = object.toString();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1,jsonString);
+        if(object != null){
+            String jsonString = object.toString();
+            args.putString(ARG_PARAM1,jsonString);
+        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,44 +65,104 @@ public class GroupSingle extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+       /* if (getArguments() != null) {
             try {
                 jsonResponse = new JSONObject(getArguments().getString(ARG_PARAM1));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_group_single, container, false);
-        int totalOptions = 0;
+        // this is just a temporary JSON to test the code...it will be fetched from activity.
+        final View view = inflater.inflate(R.layout.fragment_group_single, container, false);
+        String jsonString = "{\n" +
+                "  \"question\": {\n" +
+                "    \"type\": \"single\",\n" +
+                "    \"text\": \"Is your vision impaired?\",\n" +
+                "    \"items\": [\n" +
+                "      {\n" +
+                "        \"id\": \"s_320\",\n" +
+                "        \"name\": \"Impaired vision\",\n" +
+                "        \"choices\": [\n" +
+                "          {\n" +
+                "            \"id\": \"present\",\n" +
+                "            \"label\": \"Yes\"\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"id\": \"absent\",\n" +
+                "            \"label\": \"No\"\n" +
+                "          },\n" +
+                "          {\n" +
+                "            \"id\": \"unknown\",\n" +
+                "            \"label\": \"Don't know\"\n" +
+                "          },\n" +
+                "\t\t  {\n" +
+                "            \"id\": \"option 4\",\n" +
+                "            \"label\": \"may be\"\n" +
+                "          }\n" +
+                "        ]\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"extras\": {}\n" +
+                "  },\n" +
+                "  \"conditions\": [...],\n" +
+                "  \"extras\": {}\n" +
+                "}";
         try {
-            radioGroup = (RadioGroup) getView().findViewById(R.id.radio_group);
+            jsonResponse = new JSONObject(jsonString);
+            int totalOptions = 0;
+            radioGroup = (RadioGroup)view.findViewById(R.id.radio_group);
             radioGroup.setOrientation(LinearLayout.VERTICAL);
-            JSONObject options = (JSONObject) jsonResponse.getJSONObject("question").getJSONArray("items").get(0);
-            JSONArray jsonArray = (JSONArray) options.getJSONArray("choices");
+            final JSONObject options = (JSONObject) jsonResponse.getJSONObject("question").getJSONArray("items").get(0);
+            final JSONArray jsonArray = options.getJSONArray("choices");
             totalOptions = jsonArray.length();
+            Log.i(this.getClass().getName(),"array size : "+jsonArray);
             for(int i=0;i<totalOptions;i++){
                 RadioButton rb = new RadioButton(getContext());
                 rb.setId(i);
                 rb.setText(((JSONObject)jsonArray.get(i)).get("label").toString());
                 radioGroup.addView(rb);
             }
+
+            final Button btn = (Button) view.findViewById(R.id.btn_next);
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    int id = checkedId;
+                    radioButton = (RadioButton)view.findViewById(id);
+                    try {
+                        selectedAnswer = ((JSONObject)jsonArray.get(id)).get("id").toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    btn.setBackgroundColor(getResources().getColor(R.color.md_blue_600));
+                    btn.setEnabled(true);
+
+                }
+            });
+            btn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Condition condition = new Condition();
+                    condition.setChoiceId(selectedAnswer);
+                    try {
+                        condition.setId(options.getJSONArray("id").toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Condition[] conditions = new Condition[1];
+                    conditions[0] = condition;
+                    mListener.onFragmentInteraction(conditions,2);
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -127,6 +194,6 @@ public class GroupSingle extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Condition[] options, int identifier);
     }
 }

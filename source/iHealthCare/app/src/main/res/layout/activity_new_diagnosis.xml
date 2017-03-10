@@ -17,7 +17,7 @@
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
         </FrameLayout>
     <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_action_button"
@@ -27,15 +27,4 @@
         android:clickable="true"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end" />-->
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add_diagnosis"
-        android:layout_gravity="right|bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:onClick="startDiagnosis"
-        />
-
 </android.support.design.widget.CoordinatorLayout>

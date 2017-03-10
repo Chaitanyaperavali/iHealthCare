@@ -23,32 +23,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
-
+        android:id="@+id/radio_group"
         android:gravity="left"
         android:layout_marginLeft="20dp">
 
         <RadioButton android:id="@+id/radio_yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="YES"
+            android:text="Yes"
             android:textSize="15dp"
             android:textColor="@color/md_green_500"
-            android:onClick="onRadioButtonClicked"
             />
         <RadioButton android:id="@+id/radio_no"
             android:layout_width="wrap_content"
             android:textColor="@color/md_red_500"
             android:layout_height="wrap_content"
-            android:text="NO"
-            android:textSize="15dp"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="No"
+            android:textSize="15dp"/>
         <RadioButton android:id="@+id/radio_dontKnow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/md_blue_400"
             android:text="Don't Know"
-            android:textSize="15dp"
-            android:onClick="onRadioButtonClicked"/>
+            android:textSize="15dp"/>
     </RadioGroup>
 
     <Button
@@ -56,14 +53,13 @@
         android:layout_width="100dp"
         android:layout_marginTop="25dp"
         android:layout_marginRight="20dp"
-        android:background="@color/md_blue_600"
+        android:background="@color/md_grey_300"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="18dp"
         android:textColor="@color/md_white_1000"
         android:layout_gravity="right"
         android:id="@+id/btn_next"
-
-        android:onClick=""/>
+        android:enabled="false"/>
 
 </LinearLayout>

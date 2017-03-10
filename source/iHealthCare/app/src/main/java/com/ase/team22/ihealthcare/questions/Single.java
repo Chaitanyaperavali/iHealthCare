@@ -4,10 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.ase.team22.ihealthcare.Condition;
+import com.ase.team22.ihealthcare.FragmentSignupTwo;
 import com.ase.team22.ihealthcare.R;
 
 import org.json.JSONException;
@@ -25,9 +32,13 @@ public class Single extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    public static final String tag = "Single";
 
     // TODO: Rename and change types of parameters to view that hold question and options
     private JSONObject jsonResponse;
+    private String selectedAnswer;
+    private RadioButton radioButton ;
+    private RadioGroup radioGroup;
 
     private OnFragmentInteractionListener mListener;
 
@@ -44,8 +55,10 @@ public class Single extends Fragment {
     public static Single newInstance(JSONObject object) {
         Single fragment = new Single();
         Bundle args = new Bundle();
-        String jsonString = object.toString();
-        args.putString(ARG_PARAM1,jsonString);
+        if(object != null){
+            String jsonString = object.toString();
+            args.putString(ARG_PARAM1,jsonString);
+        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,27 +66,51 @@ public class Single extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+       /* if (getArguments() != null) {
             try {
                 jsonResponse = new JSONObject(getArguments().getString(ARG_PARAM1));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_single, container, false);
-    }
+        final View view = inflater.inflate(R.layout.fragment_single, container, false);
+        final Button btn = (Button) view.findViewById(R.id.btn_next);
+        radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int id = checkedId;
+                radioButton = (RadioButton) view.findViewById(id);
+                String ans = radioButton.getText().toString();
+                if(ans.equalsIgnoreCase("yes")){
+                    selectedAnswer = "present";
+                }
+                else if(ans.equalsIgnoreCase("no")){
+                    selectedAnswer= "absent";
+                }
+                else
+                    selectedAnswer = "unknown";
+                btn.setBackgroundColor(getResources().getColor(R.color.md_blue_600));
+                btn.setEnabled(true);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+            }
+        });
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Condition condition = new Condition();
+                condition.setChoiceId(selectedAnswer);
+                Condition[] conditions = new Condition[1];
+                conditions[0] = condition;
+                mListener.onFragmentInteraction(conditions,1);
+            }
+        });
+        return view;
     }
 
     @Override
@@ -105,10 +142,7 @@ public class Single extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Condition[] options, int identifier);
     }
 
-    public void navigate(){
-
-    }
 }
