@@ -18,8 +18,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentSignupOne fragmentSignupOne = new FragmentSignupOne();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        //fragmentTransaction.setCustomAnimations(R.anim.slide_out_left,R.anim.slide_in_right);
         fragmentTransaction.add(R.id.activity_register,fragmentSignupOne);
         fragmentTransaction.commit();
 //
