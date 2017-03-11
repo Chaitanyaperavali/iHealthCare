@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ase.team22.ihealthcare.FragmentGender">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Gender"
+        android:id="@+id/lbl_Gender"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:singleLine="false"
+        android:textColor="#415ca0"
+        android:textStyle="normal|bold" />
+
+    <ImageButton
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/male"
+        android:id="@+id/img_Male"
+        android:layout_marginTop="128dp"
+        android:layout_below="@+id/lbl_Signup"
+        android:layout_toLeftOf="@+id/img_Female"
+        android:layout_toStartOf="@+id/img_Female"
+        android:layout_marginRight="22dp"
+        android:layout_marginEnd="22dp" />
+
+
+    <ImageButton
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/female"
+        android:id="@+id/img_Female"
+        android:layout_alignTop="@+id/img_Male"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp" />
+
+    <TextView
+        android:text="Male"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_Male"
+        android:layout_toLeftOf="@+id/lbl_Gender"
+        android:layout_toStartOf="@+id/lbl_Gender"
+        android:layout_marginRight="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="28dp"
+        android:id="@+id/lbl_Male" />
+
+    <TextView
+        android:text="Female"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lbl_Female"
+        android:layout_alignBaseline="@+id/lbl_Male"
+        android:layout_alignBottom="@+id/lbl_Male"
+        android:layout_toRightOf="@+id/lbl_Gender"
+        android:layout_toEndOf="@+id/lbl_Gender"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp" />
+
+</RelativeLayout>

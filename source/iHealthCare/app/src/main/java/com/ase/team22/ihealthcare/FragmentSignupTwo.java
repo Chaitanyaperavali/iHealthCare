@@ -25,8 +25,18 @@ public class FragmentSignupTwo extends Fragment {
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),Home.class);
-                startActivity(intent);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                //transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+                transaction.setCustomAnimations(R.anim.slide_out_left,R.anim.slide_in_right);
+                transaction.replace(getActivity().findViewById(R.id.activity_register).getId(), new FragmentGender());
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+//                Intent intent = new Intent(getActivity(),Home.class);
+//                startActivity(intent);
 
             }
         });
