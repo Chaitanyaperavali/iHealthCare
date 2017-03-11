@@ -9,6 +9,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
+
+
 
 
 public class FirstpageActivity extends AppCompatActivity {
