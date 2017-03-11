@@ -13,7 +13,7 @@ import android.widget.Button;
 
 public class FragmentSignupOne extends Fragment {
 
-
+    public static final String TAG = FragmentSignupOne.class.getName();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
