@@ -7,12 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 
 import com.ase.team22.ihealthcare.Condition;
 import com.ase.team22.ihealthcare.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +34,7 @@ public class GroupMultiple extends Fragment {
     public static final String tag = "GroupMultiple";
     // TODO: Rename and change types of parameters
     private JSONObject jsonResponse;
+    private ArrayList<Condition> conditions = new ArrayList<>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,8 +52,11 @@ public class GroupMultiple extends Fragment {
     public static GroupMultiple newInstance(JSONObject object) {
         GroupMultiple fragment = new GroupMultiple();
         Bundle args = new Bundle();
-        String jsonString = object.toString();
-        args.putString(ARG_PARAM1,jsonString);
+        if(object != null){
+            String jsonString = object.toString();
+            args.putString(ARG_PARAM1,jsonString);
+        }
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,11 +65,11 @@ public class GroupMultiple extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            try {
+            /*try {
                 jsonResponse = new JSONObject(getArguments().getString(ARG_PARAM1));
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 
@@ -69,7 +77,14 @@ public class GroupMultiple extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_group_multiple, container, false);
+        View view = inflater.inflate(R.layout.fragment_group_multiple, container, false);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.checkBox_container);
+        for(int i=0;i<5;i++){
+            CheckBox ch = new CheckBox(getContext());
+            ch.setText("Symptom : "+i);
+            linearLayout.addView(ch);
+        }
+        return view;
     }
 
 
@@ -102,6 +117,6 @@ public class GroupMultiple extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Condition[] conditions, int identifier);
+        void onFragmentInteraction(ArrayList<Condition> conditions, int identifier);
     }
 }

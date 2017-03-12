@@ -20,6 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -39,6 +41,7 @@ public class GroupSingle extends Fragment {
     private RadioButton radioButton;
     private String selectedAnswer;
     private OnFragmentInteractionListener mListener;
+    private ArrayList<Condition> conditions = new ArrayList<>();
 
     public GroupSingle() {
         // Required empty public constructor
@@ -128,7 +131,6 @@ public class GroupSingle extends Fragment {
                 radioGroup.addView(rb);
             }
 
-            final Button btn = (Button) view.findViewById(R.id.btn_next);
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -136,15 +138,17 @@ public class GroupSingle extends Fragment {
                     radioButton = (RadioButton)view.findViewById(id);
                     try {
                         selectedAnswer = ((JSONObject)jsonArray.get(id)).get("id").toString();
+                        mListener.onFragmentInteraction(conditions,2);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    btn.setBackgroundColor(getResources().getColor(R.color.md_blue_600));
-                    btn.setEnabled(true);
+                    // TODO  - invoke mListener.onFragmentInteraction(conditions,2) here to let activity know about interaction with fragment.
+                    //do same thing for all other
 
                 }
             });
-            btn.setOnClickListener(new View.OnClickListener(){
+            /*btn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Condition condition = new Condition();
@@ -158,7 +162,7 @@ public class GroupSingle extends Fragment {
                     conditions[0] = condition;
                     mListener.onFragmentInteraction(conditions,2);
                 }
-            });
+            });*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -194,6 +198,6 @@ public class GroupSingle extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Condition[] options, int identifier);
+        void onFragmentInteraction(ArrayList<Condition> options, int identifier);
     }
 }

@@ -12,6 +12,8 @@ import android.widget.Button;
 import com.ase.team22.ihealthcare.Condition;
 import com.ase.team22.ihealthcare.R;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -21,14 +23,10 @@ import com.ase.team22.ihealthcare.R;
  * create an instance of this fragment.
  */
 public class QuestionInitiatorFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static final String tag = "QuestionInitiator";
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ArrayList<Condition> conditions;
 
     private OnFragmentInteractionListener mListener;
 
@@ -57,10 +55,10 @@ public class QuestionInitiatorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+       /* if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        }*/
     }
 
     @Override
@@ -72,7 +70,6 @@ public class QuestionInitiatorFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Condition[] conditions = new Condition[0];
                 mListener.onFragmentInteraction(conditions,0);
             }
         });
@@ -108,6 +105,6 @@ public class QuestionInitiatorFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Condition[] conditions,int identifier);
+        void onFragmentInteraction(ArrayList<Condition> conditions, int identifier);
     }
 }

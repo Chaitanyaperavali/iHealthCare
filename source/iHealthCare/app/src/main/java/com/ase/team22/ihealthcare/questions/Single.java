@@ -20,6 +20,8 @@ import com.ase.team22.ihealthcare.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -33,6 +35,7 @@ public class Single extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     public static final String tag = "Single";
+    private ArrayList<Condition> conditions = new ArrayList<>();
 
     // TODO: Rename and change types of parameters to view that hold question and options
     private JSONObject jsonResponse;
@@ -79,7 +82,6 @@ public class Single extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_single, container, false);
-        final Button btn = (Button) view.findViewById(R.id.btn_next);
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -95,21 +97,14 @@ public class Single extends Fragment {
                 }
                 else
                     selectedAnswer = "unknown";
-                btn.setBackgroundColor(getResources().getColor(R.color.md_blue_600));
-                btn.setEnabled(true);
+                Condition condition = new Condition();
+                condition.setChoiceId(selectedAnswer);
+                conditions.add(condition);
+                mListener.onFragmentInteraction(conditions,1);
 
             }
         });
-        btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Condition condition = new Condition();
-                condition.setChoiceId(selectedAnswer);
-                Condition[] conditions = new Condition[1];
-                conditions[0] = condition;
-                mListener.onFragmentInteraction(conditions,1);
-            }
-        });
+
         return view;
     }
 
@@ -142,7 +137,7 @@ public class Single extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Condition[] options, int identifier);
+        void onFragmentInteraction(ArrayList<Condition> options, int identifier);
     }
 
 }
