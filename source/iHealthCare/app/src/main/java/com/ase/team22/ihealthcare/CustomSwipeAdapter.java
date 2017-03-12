@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class CustomSwipeAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return (view==(ImageView)object);
+        return (view==(CardView)object);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class CustomSwipeAdapter extends PagerAdapter {
     }
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((ImageView)object);
+        container.removeView((CardView)object);
     }
 
 }

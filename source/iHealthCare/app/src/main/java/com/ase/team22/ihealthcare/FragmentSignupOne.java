@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 
 
@@ -25,12 +26,14 @@ public class FragmentSignupOne extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left);
                 //transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-                transaction.setCustomAnimations(R.anim.slide_out_left,R.anim.slide_in_right);
-                transaction.replace(getActivity().findViewById(R.id.activity_register).getId(), new FragmentSignupTwo());
+                //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                transaction.replace(getActivity().findViewById(R.id.activity_register).getId(), new FragmentSignupTwo(),"signupone");
                 transaction.addToBackStack(null);
+
                 transaction.commit();
             }
         });
