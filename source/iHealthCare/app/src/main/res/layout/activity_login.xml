@@ -69,17 +69,10 @@
                 android:textColor="#FFFFFF"
                 android:background="@color/colorPrimary"
                 />
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="30dp"
-                android:id="@+id/gin"
-                android:text="Google"
-                android:textColor="#FFFFFF"
-                android:background="#D50500"
-                />
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/gsin"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"></com.google.android.gms.common.SignInButton>
         </LinearLayout>
 
 
