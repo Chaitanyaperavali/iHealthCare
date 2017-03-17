@@ -124,7 +124,7 @@ public class GroupSingle extends Fragment {
             final JSONObject options = (JSONObject) jsonResponse.getJSONObject("question").getJSONArray("items").get(0);
             final JSONArray jsonArray = options.getJSONArray("choices");
             totalOptions = jsonArray.length();
-            Log.i(this.getClass().getName(),"array size : "+jsonArray);
+            //Log.i(this.getClass().getName(),"array size : "+jsonArray);
             for(int i=0;i<totalOptions;i++){
                 RadioButton rb = new RadioButton(getContext());
                 rb.setId(i);
