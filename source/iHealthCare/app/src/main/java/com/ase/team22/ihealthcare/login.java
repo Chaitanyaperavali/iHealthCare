@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -47,10 +48,11 @@ public class login extends AppCompatActivity implements View.OnClickListener,Goo
         msg.setVisibility(View.INVISIBLE);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .build();
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
-        SignInButton signInButton = (SignInButton) findViewById(R.id.gsin);
+        Button signInButton = (Button) findViewById(R.id.gsin);
         signInButton.setOnClickListener(this);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
@@ -134,7 +136,8 @@ public class login extends AppCompatActivity implements View.OnClickListener,Goo
             //Log.i(this.getClass().getName(),data.toString()+" : "+result.isSuccess()+" resultcode : "+ resultCode);
                 if (result.isSuccess()) {
                     GoogleSignInAccount account = result.getSignInAccount();
-                    //assert account != null;
+                    /*Log.i(this.getClass().getName(),data.toString()+" : "+account.getAccount().toString()
+                            +"\n"+account.getId()+"\n"+account.getIdToken()+"\n"+account.zzqF());*/
                     msg.setVisibility(View.VISIBLE);
                     msg.setText("Hello "+account.getDisplayName()+" ! \nThanks for logging into iHealthCare");
                     new Handler().postDelayed(new Runnable() {

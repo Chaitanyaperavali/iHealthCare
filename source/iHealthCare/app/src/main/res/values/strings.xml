@@ -16,8 +16,10 @@
     <string name="drawer_item_collapsing_toolbar_drawer">iHealthCare</string>
     <string name="lorem_ipsum">This is some dummy text written to showup on home page.</string>
     <string name="drawer_item_logout">Logout</string>
+
     <string name="server_client_id">1027042592459endash5diuetitq4fi28tno15ouj9t9bq3l8t1.apps.googleusercontent.com</string>
 <string name="facebook_app_id">1421871364521891</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

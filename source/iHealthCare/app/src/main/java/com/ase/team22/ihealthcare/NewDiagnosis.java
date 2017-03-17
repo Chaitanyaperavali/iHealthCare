@@ -1,6 +1,8 @@
 package com.ase.team22.ihealthcare;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +37,7 @@ public class NewDiagnosis extends AppCompatActivity
     private ArrayList<Condition> conditions = new ArrayList();
     private int identifier;
     private Stack<String> mTransactionStack = new Stack<>();
+    private static int tagIdentifier=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +45,12 @@ public class NewDiagnosis extends AppCompatActivity
         setContentView(R.layout.activity_new_diagnosis);
         nextQuestion = (Button) findViewById(R.id.btn_next);
         nextQuestion.setVisibility(View.INVISIBLE);
+        String tag = QuestionInitiatorFragment.tag+tagIdentifier;
         QuestionInitiatorFragment questionInitiatorFragment = new QuestionInitiatorFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         //transaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_in_right);
-        transaction.add(R.id.fragment_container, questionInitiatorFragment,QuestionInitiatorFragment.tag);
-        transaction.addToBackStack(null);
+        transaction.add(R.id.fragment_container, questionInitiatorFragment,tag);
+        transaction.addToBackStack(tag);
         transaction.commit();
 
 
@@ -91,11 +95,12 @@ public class NewDiagnosis extends AppCompatActivity
         Single singleQuestionFragment = Single.newInstance(object);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left);
-        transaction.replace(R.id.fragment_container, singleQuestionFragment,Single.tag);
+        tagIdentifier++;
+        String tag = Single.tag+tagIdentifier;
+        transaction.replace(R.id.fragment_container, singleQuestionFragment,tag);
         disableNextButton();
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(tag);
         transaction.commit();
-
 
         /*getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag(mTransactionStack.peek())).commit();
         Log.i(this.getClass().getName(),"Stack after first peek: "+mTransactionStack);
@@ -116,19 +121,23 @@ public class NewDiagnosis extends AppCompatActivity
         GroupSingle groupSingleQuestionFragment = GroupSingle.newInstance(object);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left);
-        transaction.replace(R.id.fragment_container, groupSingleQuestionFragment,GroupSingle.tag);
+        tagIdentifier++;
+        String tag = GroupSingle.tag+tagIdentifier;
+        transaction.replace(R.id.fragment_container, groupSingleQuestionFragment,tag);
         disableNextButton();
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(tag);
         transaction.commit();
     }
-
+    // TODO  - Save state instance should be implemented
     public void renderGroupMultipleQuestionFragment(JSONObject object){
         GroupMultiple groupMultipleQuestionFragment = GroupMultiple.newInstance(object);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left);
-        transaction.replace(R.id.fragment_container, groupMultipleQuestionFragment,GroupMultiple.tag);
+        tagIdentifier++;
+        String tag = GroupMultiple.tag+tagIdentifier;
+        transaction.replace(R.id.fragment_container, groupMultipleQuestionFragment,tag);
         disableNextButton();
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(tag);
         transaction.commit();
     }
 
@@ -141,12 +150,36 @@ public class NewDiagnosis extends AppCompatActivity
             renderGroupSingleQuestionFragment(obj);
         }
         else if(identifier == 2){
-            GroupMultipleTypeQuestion groupMultipleTypeQuestion = new GroupMultipleTypeQuestion(conditions);
+           /* GroupMultipleTypeQuestion groupMultipleTypeQuestion = new GroupMultipleTypeQuestion(conditions);
             JSONObject obj = groupMultipleTypeQuestion.getJsonObject();
-            renderGroupMultipleQuestionFragment(obj);
+            renderGroupMultipleQuestionFragment(obj);*/
+            SingleTypeQuestion singleTypeQuestion = new SingleTypeQuestion(conditions);
+            JSONObject obj = singleTypeQuestion.getJsonObject();
+            renderSingleQuestionFragment(obj);
         }
         else{
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+    tagIdentifier = 0;
+        // Check if that Fragment is currently visible
+       // boolean myFragXwasVisible = myFragment.isVisible();
+        FragmentManager fm = getSupportFragmentManager();
+        int totalQuestions = fm.getBackStackEntryCount();
+
+        for(int i=totalQuestions-1;i>-1;i--){
+            //Log.i(this.getClass().getName(),fm.getBackStackEntryAt(i).getName());
+            fm.beginTransaction().remove(fm.findFragmentByTag(fm.getBackStackEntryAt(i).getName())).commit();
+        }
+        Intent intent = new Intent(this,Home.class);
+        startActivity(intent);
+        // If it was your particular Fragment that was visible...
+        /*if (myFragXwasVisible) {
+            FragmentTransaction trans = fragMan.beginTransaction();
+            trans.remove(myFragment).commit;
+        }*/
     }
 }
