@@ -22,12 +22,16 @@ android {
     }
     sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/anim'] } }
 }
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.facebook.android:facebook-android-sdk:4.20.0'
     compile('com.mikepenz:materialdrawer:5.8.1@aar') {
         transitive = true
     }

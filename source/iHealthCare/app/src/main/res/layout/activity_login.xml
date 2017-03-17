@@ -67,21 +67,21 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="40dp"
             >
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <TextView
+                android:id="@+id/txtstatus"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Welcome"/>
+            <com.facebook.login.widget.LoginButton
+                android:layout_width="73dp"
+                android:layout_height="20dp"
                 android:id="@+id/fin"
-                android:text="Facebook"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="15dp"
-                android:textColor="#FFFFFF"
-                android:background="@color/colorPrimary"
-                />
+                android:layout_marginRight="15dp" />
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/gsin"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_marginRight="30dp"
                 android:layout_marginLeft="15dp"
                 android:layout_height="wrap_content">
