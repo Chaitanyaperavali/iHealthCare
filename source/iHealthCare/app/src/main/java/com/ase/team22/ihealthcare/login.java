@@ -1,6 +1,7 @@
 package com.ase.team22.ihealthcare;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -11,6 +12,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookActivity;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,6 +36,9 @@ public class login extends AppCompatActivity implements View.OnClickListener,Goo
     private GoogleApiClient googleApiClient;
     private static final int REQ_CODE = 9001;
     private TextView msg;
+    TextView txtStatus;
+    LoginButton fin;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +54,37 @@ public class login extends AppCompatActivity implements View.OnClickListener,Goo
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
         Button signInButton = (Button) findViewById(R.id.gsin);
         signInButton.setOnClickListener(this);
-
-
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        setContentView(R.layout.activity_login);
+        initializeControls();
+        loginWithFB();
     }
+
+    private void initializeControls() {
+        txtStatus = (TextView) findViewById(R.id.txtstatus);
+        fin = (LoginButton) findViewById(R.id.fin);
+        callbackManager = CallbackManager.Factory.create();
+    }
+    private void loginWithFB() {
+
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                txtStatus.setText("login success/n"+loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                txtStatus.setText("login cancelled.");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                txtStatus.setText("login error: "+error.getMessage());
+            }
+        });
+    }
+
 
     public void userLogin(View v) {
         if (v.getId() == R.id.login) {
@@ -86,6 +128,9 @@ public class login extends AppCompatActivity implements View.OnClickListener,Goo
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        login callbackManager = null;
+
         if (requestCode == REQ_CODE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             //Log.i(this.getClass().getName(),data.toString()+" : "+result.isSuccess()+" resultcode : "+ resultCode);
@@ -105,6 +150,7 @@ public class login extends AppCompatActivity implements View.OnClickListener,Goo
 
                 }
         }
+
     }
 
 }
