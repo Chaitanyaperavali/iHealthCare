@@ -40,17 +40,6 @@
             android:layout_marginTop="14dp"
             android:id="@+id/tvpsw"
             />
-
-        <Button
-            android:text="login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="userLogin"
-            android:layout_marginTop="25dp"
-            android:textColor="#FFFFFF"
-            android:id="@+id/login"
-            android:background="#2196F3"
-            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,35 +56,38 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="40dp"
             >
-            <TextView
-                android:id="@+id/txtstatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Welcome"/>
-            <com.facebook.login.widget.LoginButton
-                android:layout_width="73dp"
-                android:layout_height="20dp"
-                android:id="@+id/fin"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="15dp"
+            <Button
+                android:text="login"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
+                android:onClick="userLogin"
                 android:textColor="#FFFFFF"
-                android:background="@color/colorPrimary"
+                android:textSize="15dp"
+                android:id="@+id/login"
+                android:background="@color/md_indigo_400"
                 />
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/gsin"
-                android:layout_width="wrap_content"
-                android:background="@color/md_red_600"
-                android:textColor="@color/md_white_1000"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="15dp"
-                android:layout_height="wrap_content"/>
-           
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_height="50dp"
+                android:onClick="socialMediaLogin"/>
+
         </LinearLayout>
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/fin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:onClick="socialMediaLogin"/>
     </LinearLayout>
 </ScrollView>
 

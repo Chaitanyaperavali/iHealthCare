@@ -1,37 +1,35 @@
 {
   "project_info": {
-    "project_number": "1027042592459",
-    "project_id": "ihealthcare-161107"
+    "project_number": "951476291262",
+    "firebase_url": "https://ihealthcare-f854a.firebaseio.com",
+    "project_id": "ihealthcare-f854a",
+    "storage_bucket": "ihealthcare-f854a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1027042592459:android:f032d582162e7bdc",
+        "mobilesdk_app_id": "1:951476291262:android:f032d582162e7bdc",
         "android_client_info": {
           "package_name": "com.ase.team22.ihealthcare"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1027042592459-kvcdth10pnm4441cjdsk8mrf5br0ifbo.apps.googleusercontent.com",
+          "client_id": "951476291262-dda23e92sqstb4l05jrv0eis5ep40l9m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ase.team22.ihealthcare",
-            "certificate_hash": "babdcbf364a6b10f5e477e56b5bb067b9806414b"
+            "certificate_hash": "22f44e0b767b673e0fe3ce185365da47323e7d11"
           }
         },
         {
-          "client_id": "1027042592459-teko4n3ge0np0gahlrqt5ej92otmom35.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "1027042592459-e5cunlv0fbeeg1n4mqgis8ctrbnlvr5t.apps.googleusercontent.com",
+          "client_id": "951476291262-cat6ec6rgaj1te7qftbq127qg42qcs08.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCvhm7eaMM6YZRFZ8l-d6UCrCj7cUKjwXc"
+          "current_key": "AIzaSyA_3BgJav_6UNF7ZPa1d7XRVfe6ZWDcR4Y"
         }
       ],
       "services": {
@@ -39,54 +37,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951476291262-cat6ec6rgaj1te7qftbq127qg42qcs08.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1027042592459:android:2fae665f4c9d67bc",
-        "android_client_info": {
-          "package_name": "com.ase.team22.iHeathCare"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1027042592459-1m0rveb2ml3f8mamjsjhjs333jnoaeh2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ase.team22.iHeathCare",
-            "certificate_hash": "e5867a952c0edf310037ea0468682606ce36a2c3"
-          }
-        },
-        {
-          "client_id": "1027042592459-teko4n3ge0np0gahlrqt5ej92otmom35.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "1027042592459-e5cunlv0fbeeg1n4mqgis8ctrbnlvr5t.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCvhm7eaMM6YZRFZ8l-d6UCrCj7cUKjwXc"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

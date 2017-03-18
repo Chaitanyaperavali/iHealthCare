@@ -32,19 +32,20 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 
-public class login extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
+public class login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private GoogleApiClient googleApiClient;
     private static final int REQ_CODE = 9001;
     private TextView msg;
     TextView txtStatus;
-    LoginButton fin;
     CallbackManager callbackManager;
+    private static final String LOGIN_KEY = "button pressed";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         msg = (TextView) findViewById(R.id.tv_msg);
+        callbackManager = CallbackManager.Factory.create();
         msg.setVisibility(View.INVISIBLE);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -52,35 +53,30 @@ public class login extends AppCompatActivity implements View.OnClickListener,Goo
                 .build();
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
-        Button signInButton = (Button) findViewById(R.id.gsin);
-        signInButton.setOnClickListener(this);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.activity_login);
-        initializeControls();
-        loginWithFB();
     }
 
-    private void initializeControls() {
-        txtStatus = (TextView) findViewById(R.id.txtstatus);
-        fin = (LoginButton) findViewById(R.id.fin);
-        callbackManager = CallbackManager.Factory.create();
-    }
     private void loginWithFB() {
 
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                txtStatus.setText("login success/n"+loginResult.getAccessToken());
+                //txtStatus.setText("login success/n"+loginResult.getAccessToken());
+                Log.i(this.getClass().getName(),loginResult.toString()+" : "+loginResult.getAccessToken()+" resultcode : Success");
+                Intent i = new Intent(login.this, Home.class);
+                startActivity(i);
+
             }
 
             @Override
             public void onCancel() {
-                txtStatus.setText("login cancelled.");
+                Log.i(this.getClass().getName()," resultcode : cancelled");
+                //txtStatus.setText("login cancelled.");
             }
 
             @Override
             public void onError(FacebookException error) {
-                txtStatus.setText("login error: "+error.getMessage());
+                Log.i(this.getClass().getName()," resultcode : error");
             }
         });
     }
@@ -88,28 +84,22 @@ public class login extends AppCompatActivity implements View.OnClickListener,Goo
 
     public void userLogin(View v) {
         if (v.getId() == R.id.login) {
+            //TODO - Implement authentication of user against registered details.
             Intent i = new Intent(login.this, Home.class);
             startActivity(i);
         }
 
     }
 
-    public void facebookSignin(View v) {
-        if (v.getId() == R.id.fin) {
-            /*Intent i = new Intent( login.this,Home.class);
-            startActivity(i);*/
-        }
 
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
+    public void socialMediaLogin(View v) {
 
         switch (v.getId()) {
             case R.id.gsin:
                 signin();
+                break;
+            case R.id.fin:
+                loginWithFB();
                 break;
         }
 
@@ -117,39 +107,41 @@ public class login extends AppCompatActivity implements View.OnClickListener,Goo
 
     private void signin() {
         Intent i = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        i.putExtra(LOGIN_KEY,"google");
         startActivityForResult(i, REQ_CODE);
     }
 
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.i(this.getClass().getName()," resultcode : google failure");
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        login callbackManager = null;
-
-        if (requestCode == REQ_CODE) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            //Log.i(this.getClass().getName(),data.toString()+" : "+result.isSuccess()+" resultcode : "+ resultCode);
-                if (result.isSuccess()) {
-                    GoogleSignInAccount account = result.getSignInAccount();
+        if(data != null && data.getExtras() != null){
+                if (requestCode == REQ_CODE) {
+                    GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                    Log.i(this.getClass().getName(),data.toString()+" : "+result.isSuccess()+" resultcode : "+ resultCode);
+                    if (result.isSuccess()) {
+                        GoogleSignInAccount account = result.getSignInAccount();
                     /*Log.i(this.getClass().getName(),data.toString()+" : "+account.getAccount().toString()
                             +"\n"+account.getId()+"\n"+account.getIdToken()+"\n"+account.zzqF());*/
-                    msg.setVisibility(View.VISIBLE);
-                    msg.setText("Hello "+account.getDisplayName()+" ! \nThanks for logging into iHealthCare");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent i = new Intent(login.this,Home.class);
-                            startActivity(i);
-                        }
-                    }, 1500);
+                        msg.setVisibility(View.VISIBLE);
+                        msg.setText("Hello "+account.getDisplayName()+" ! \nThanks for logging into iHealthCare");
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent i = new Intent(login.this,Home.class);
+                                startActivity(i);
+                            }
+                        }, 1500);
 
+                    }
                 }
-        }
+            }
+
+            callbackManager.onActivityResult(requestCode, resultCode, data);
 
     }
 
