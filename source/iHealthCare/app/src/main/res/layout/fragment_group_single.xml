@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/single_question"
+                android:id="@+id/multiple_question_single"
                 android:text="Group single type question comes here"
                 android:textColor="@color/primary_dark"
                 android:textSize="20dp"

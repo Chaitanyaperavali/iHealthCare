@@ -38,7 +38,7 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private TextView msg;
     TextView txtStatus;
     CallbackManager callbackManager;
-    private static final String LOGIN_KEY = "button pressed";
+    private int loginKey = -1; //2 for Facebook login, 1 for google login
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,21 +62,22 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
             @Override
             public void onSuccess(LoginResult loginResult) {
                 //txtStatus.setText("login success/n"+loginResult.getAccessToken());
-                Log.i(this.getClass().getName(),loginResult.toString()+" : "+loginResult.getAccessToken()+" resultcode : Success");
+                //Log.i(this.getClass().getName(),loginResult.toString()+" : "+loginResult.getAccessToken()+" resultcode : Success");
                 Intent i = new Intent(login.this, Home.class);
+                i.putExtra("facebook","facebook");
                 startActivity(i);
 
             }
 
             @Override
             public void onCancel() {
-                Log.i(this.getClass().getName()," resultcode : cancelled");
+                //Log.i(this.getClass().getName()," resultcode : cancelled");
                 //txtStatus.setText("login cancelled.");
             }
 
             @Override
             public void onError(FacebookException error) {
-                Log.i(this.getClass().getName()," resultcode : error");
+                //Log.i(this.getClass().getName()," resultcode : error");
             }
         });
     }
@@ -96,9 +97,12 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
         switch (v.getId()) {
             case R.id.gsin:
+                this.loginKey = 1;
+                Log.i(this.getClass().getName()," trying to signin with google");
                 signin();
                 break;
             case R.id.fin:
+                this.loginKey = 2;
                 loginWithFB();
                 break;
         }
@@ -107,7 +111,7 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     private void signin() {
         Intent i = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        i.putExtra(LOGIN_KEY,"google");
+        //i.putExtra(loginKey,"google");
         startActivityForResult(i, REQ_CODE);
     }
 
@@ -119,7 +123,7 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data != null && data.getExtras() != null){
+        if(data != null && data.getExtras() != null && loginKey == 1){
                 if (requestCode == REQ_CODE) {
                     GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                     Log.i(this.getClass().getName(),data.toString()+" : "+result.isSuccess()+" resultcode : "+ resultCode);

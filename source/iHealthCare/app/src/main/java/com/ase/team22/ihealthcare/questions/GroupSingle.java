@@ -1,26 +1,32 @@
 package com.ase.team22.ihealthcare.questions;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
-import com.ase.team22.ihealthcare.Condition;
 import com.ase.team22.ihealthcare.R;
+import com.ase.team22.ihealthcare.jsonmodel.Choice;
+import com.ase.team22.ihealthcare.jsonmodel.Condition;
+import com.ase.team22.ihealthcare.jsonmodel.Item;
+import com.ase.team22.ihealthcare.jsonmodel.Question;
+import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,19 +37,14 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class GroupSingle extends Fragment {
-    // TODO: Rename parameter argument
-    // s, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "jsonResponse";
+
     public static final String tag =  "GroupSingle";
     // TODO: Rename and change types of parameters
-   private JSONObject jsonResponse;
     private RadioGroup radioGroup;
-    private RadioButton radioButton;
-    private String selectedAnswer;
     private OnFragmentInteractionListener mListener;
     private ArrayList<Condition> conditions = new ArrayList<>();
-
+    private static ResponseJSONInfermedica responseJSONInfermedica;
+    private Map<Integer,String> map = new ArrayMap<>();
     public GroupSingle() {
         // Required empty public constructor
     }
@@ -55,13 +56,10 @@ public class GroupSingle extends Fragment {
      * @return A new instance of fragment GroupSingle.
      */
     // TODO: Rename and change types and number of parameters
-    public static GroupSingle newInstance(JSONObject object) {
+    public static GroupSingle newInstance(ResponseJSONInfermedica object) {
         GroupSingle fragment = new GroupSingle();
+        responseJSONInfermedica = object;
         Bundle args = new Bundle();
-        if(object != null){
-            String jsonString = object.toString();
-            args.putString(ARG_PARAM1,jsonString);
-        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,104 +67,43 @@ public class GroupSingle extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* if (getArguments() != null) {
-            try {
-                jsonResponse = new JSONObject(getArguments().getString(ARG_PARAM1));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // this is just a temporary JSON to test the code...it will be fetched from activity.
         final View view = inflater.inflate(R.layout.fragment_group_single, container, false);
-        String jsonString = "{\n" +
-                "  \"question\": {\n" +
-                "    \"type\": \"single\",\n" +
-                "    \"text\": \"Is your vision impaired?\",\n" +
-                "    \"items\": [\n" +
-                "      {\n" +
-                "        \"id\": \"s_320\",\n" +
-                "        \"name\": \"Impaired vision\",\n" +
-                "        \"choices\": [\n" +
-                "          {\n" +
-                "            \"id\": \"present\",\n" +
-                "            \"label\": \"Yes\"\n" +
-                "          },\n" +
-                "          {\n" +
-                "            \"id\": \"absent\",\n" +
-                "            \"label\": \"No\"\n" +
-                "          },\n" +
-                "          {\n" +
-                "            \"id\": \"unknown\",\n" +
-                "            \"label\": \"Don't know\"\n" +
-                "          },\n" +
-                "\t\t  {\n" +
-                "            \"id\": \"option 4\",\n" +
-                "            \"label\": \"may be\"\n" +
-                "          }\n" +
-                "        ]\n" +
-                "      }\n" +
-                "    ],\n" +
-                "    \"extras\": {}\n" +
-                "  },\n" +
-                "  \"conditions\": [...],\n" +
-                "  \"extras\": {}\n" +
-                "}";
-        try {
-            jsonResponse = new JSONObject(jsonString);
             int totalOptions = 0;
             radioGroup = (RadioGroup)view.findViewById(R.id.radio_group);
+            TextView qst = (TextView)view.findViewById(R.id.multiple_question_single);
             radioGroup.setOrientation(LinearLayout.VERTICAL);
-            final JSONObject options = (JSONObject) jsonResponse.getJSONObject("question").getJSONArray("items").get(0);
-            final JSONArray jsonArray = options.getJSONArray("choices");
-            totalOptions = jsonArray.length();
-            //Log.i(this.getClass().getName(),"array size : "+jsonArray);
+            final Question question = responseJSONInfermedica.getQuestion();
+            qst.setText(question.getText());
+            final List<Item> items = question.getItems();;
+            totalOptions = items.size();
             for(int i=0;i<totalOptions;i++){
                 RadioButton rb = new RadioButton(getContext());
-                rb.setId(i);
-                rb.setText(((JSONObject)jsonArray.get(i)).get("label").toString());
+                //rb.setId(i);
+                rb.setText(items.get(i).getName());
                 radioGroup.addView(rb);
+                map.put(rb.getId(),items.get(i).getId());
             }
 
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    int id = checkedId;
-                    radioButton = (RadioButton)view.findViewById(id);
-                    try {
-                        selectedAnswer = ((JSONObject)jsonArray.get(id)).get("id").toString();
-                        mListener.onFragmentInteraction(conditions,2);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    // TODO  - invoke mListener.onFragmentInteraction(conditions,2) here to let activity know about interaction with fragment.
-                    //do same thing for all other
-
-                }
-            });
-            /*btn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
+                    String conditionID = map.get(checkedId);
                     Condition condition = new Condition();
-                    condition.setChoiceId(selectedAnswer);
-                    try {
-                        condition.setId(options.getJSONArray("id").toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    condition.setId(conditionID);
+                    condition.setChoiceId("present");
+                    if(conditions.size()>1){
+                        conditions.remove(0);
                     }
-                    Condition[] conditions = new Condition[1];
-                    conditions[0] = condition;
+                    conditions.add(condition);
+                   // Log.i(tag,conditions.size()+"");
                     mListener.onFragmentInteraction(conditions,2);
                 }
-            });*/
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            });
         return view;
     }
 

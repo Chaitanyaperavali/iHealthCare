@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import android.graphics.Color;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -38,7 +41,12 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        Intent i = getIntent();
+        if(i.getExtras() != null){
+            if(i.getExtras().get("facebook").equals("facebook")){
+                FacebookSdk.sdkInitialize(getApplicationContext());
+            }
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -81,6 +89,8 @@ public class Home extends AppCompatActivity {
                         if (drawerItem != null) {
                             Intent intent = null;
                             if (drawerItem.getIdentifier() == 7) {
+                               // Log.i(this.getClass().getName(),"login behaviour of facebook in logout method: ");
+                                LoginManager.getInstance().logOut();
                                 intent = new Intent(Home.this, FirstpageActivity.class);
                             } /*else if (drawerItem.getIdentifier() == 2) {
                                 intent = new Intent(Home.this, ActionBarActivity.class);

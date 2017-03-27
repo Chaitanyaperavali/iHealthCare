@@ -1,11 +1,16 @@
-package com.ase.team22.ihealthcare;
 
-/**
- * Created by chaitanya on 10/03/2017.
- */
+package com.ase.team22.ihealthcare.jsonmodel;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Condition {
+
+    @SerializedName("id")
+    @Expose
     private String id;
+    @SerializedName("choice_id")
+    @Expose
     private String choiceId;
 
     public String getId() {
@@ -23,4 +28,5 @@ public class Condition {
     public void setChoiceId(String choiceId) {
         this.choiceId = choiceId;
     }
+
 }
