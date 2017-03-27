@@ -44,8 +44,8 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/checkBox1"
-                            android:text="Symptom A"
+                            android:id="@+id/s_21"
+                            android:text="Headache"
                             android:textSize="18dp"
                             />
                     </LinearLayout>
@@ -69,8 +69,8 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/checkBox2"
-                            android:text="Symptom B"
+                            android:id="@+id/s_1190"
+                            android:text="Back pain"
                             android:textSize="18dp"
                             />
                     </LinearLayout>
@@ -94,8 +94,8 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/checkBox3"
-                            android:text="Symptom C"
+                            android:id="@+id/s_98"
+                            android:text="Fever"
                             android:textSize="18dp"
                             />
                     </LinearLayout>
@@ -119,8 +119,8 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/checkBox4"
-                            android:text="Symptom D"
+                            android:id="@+id/s_119"
+                            android:text="Lethargy"
                             android:textSize="18dp"
                             />
                     </LinearLayout>
@@ -144,8 +144,8 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/checkBox5"
-                            android:text="Symptom E"
+                            android:id="@+id/s_88"
+                            android:text="Dyspnea"
                             android:textSize="18dp"
                             />
                     </LinearLayout>
@@ -169,8 +169,8 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/checkBox6"
-                            android:text="Symptom F"
+                            android:id="@+id/s_13"
+                            android:text="Abdominal pain"
                             android:textSize="18dp"
                             />
                     </LinearLayout>
@@ -194,8 +194,8 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/checkBox7"
-                            android:text="Symptom G"
+                            android:id="@+id/s_156"
+                            android:text="Nausea"
                             android:textSize="18dp"
                             />
                     </LinearLayout>
@@ -219,8 +219,33 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/checkBox8"
-                            android:text="Symptom H"
+                            android:id="@+id/s_285"
+                            android:text="Weight loss"
+                            android:textSize="18dp"
+                            />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="16dp"
+                        android:weightSum="2"
+                        android:paddingRight="16dp"
+                        android:paddingTop="5dp">
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/s_241"
+                            android:text="Worrisome skin lesions"
                             android:textSize="18dp"
                             />
                     </LinearLayout>
@@ -237,12 +262,13 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/md_blue_700"
+                android:background="@color/md_grey_100"
                 android:text="Next"
                 android:textSize="20dp"
                 android:id="@+id/btn_next"
                 android:textColor="@color/md_white_1000"
                 android:layout_gravity="right"
+                android:enabled="false"
                 />
         </LinearLayout>
     </RelativeLayout>

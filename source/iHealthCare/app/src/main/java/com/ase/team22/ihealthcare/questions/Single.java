@@ -1,23 +1,20 @@
 package com.ase.team22.ihealthcare.questions;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
-import com.ase.team22.ihealthcare.Condition;
-import com.ase.team22.ihealthcare.FragmentSignupTwo;
 import com.ase.team22.ihealthcare.R;
+import com.ase.team22.ihealthcare.jsonmodel.Condition;
+import com.ase.team22.ihealthcare.jsonmodel.Question;
+import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -38,13 +35,12 @@ public class Single extends Fragment {
     private ArrayList<Condition> conditions = new ArrayList<>();
 
     // TODO: Rename and change types of parameters to view that hold question and options
-    private JSONObject jsonResponse;
+    private static ResponseJSONInfermedica responseJSONInfermedica;
     private String selectedAnswer;
     private RadioButton radioButton ;
     private RadioGroup radioGroup;
 
     private OnFragmentInteractionListener mListener;
-
     public Single() {
         // Required empty public constructor
     }
@@ -55,13 +51,10 @@ public class Single extends Fragment {
      * @return A new instance of fragment Single.
      */
     // TODO: Rename and change types and number of parameters
-    public static Single newInstance(JSONObject object) {
+    public static Single newInstance(ResponseJSONInfermedica result) {
         Single fragment = new Single();
+        responseJSONInfermedica = result;
         Bundle args = new Bundle();
-        if(object != null){
-            String jsonString = object.toString();
-            args.putString(ARG_PARAM1,jsonString);
-        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,6 +75,8 @@ public class Single extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_single, container, false);
+        TextView tv = (TextView) view.findViewById(R.id.single_question);
+        tv.setText(responseJSONInfermedica.getQuestion().getText());
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -98,6 +93,7 @@ public class Single extends Fragment {
                 else
                     selectedAnswer = "unknown";
                 Condition condition = new Condition();
+                condition.setId(responseJSONInfermedica.getQuestion().getItems().get(0).getId());
                 condition.setChoiceId(selectedAnswer);
                 conditions.add(condition);
                 mListener.onFragmentInteraction(conditions,1);

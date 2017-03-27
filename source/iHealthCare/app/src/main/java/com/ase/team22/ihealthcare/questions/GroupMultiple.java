@@ -1,22 +1,29 @@
 package com.ase.team22.ihealthcare.questions;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.ase.team22.ihealthcare.Condition;
 import com.ase.team22.ihealthcare.R;
+import com.ase.team22.ihealthcare.jsonmodel.Choice;
+import com.ase.team22.ihealthcare.jsonmodel.Condition;
+import com.ase.team22.ihealthcare.jsonmodel.Item;
+import com.ase.team22.ihealthcare.jsonmodel.Question;
+import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,13 +36,11 @@ import java.util.ArrayList;
 public class GroupMultiple extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     public static final String tag = "GroupMultiple";
     // TODO: Rename and change types of parameters
-    private JSONObject jsonResponse;
+    private static ResponseJSONInfermedica responseJSONInfermedica;
     private ArrayList<Condition> conditions = new ArrayList<>();
-
+    Map<Integer,String> map = new ArrayMap<>();
     private OnFragmentInteractionListener mListener;
 
     public GroupMultiple() {
@@ -49,14 +54,10 @@ public class GroupMultiple extends Fragment {
      * @return A new instance of fragment GroupMultiple.
      */
     // TODO: Rename and change types and number of parameters
-    public static GroupMultiple newInstance(JSONObject object) {
+    public static GroupMultiple newInstance(ResponseJSONInfermedica object) {
         GroupMultiple fragment = new GroupMultiple();
+        responseJSONInfermedica = object;
         Bundle args = new Bundle();
-        if(object != null){
-            String jsonString = object.toString();
-            args.putString(ARG_PARAM1,jsonString);
-        }
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,12 +80,52 @@ public class GroupMultiple extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_multiple, container, false);
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.checkBox_container);
-        for(int i=0;i<5;i++){
+        Question question = responseJSONInfermedica.getQuestion();
+        List<Item> items = question.getItems();
+        TextView tv = (TextView) view.findViewById(R.id.multiple_question_group);
+        tv.setText(question.getText());
+        for(int i=0;i<items.size();i++){
+            Item item = items.get(i);
             CheckBox ch = new CheckBox(getContext());
-            ch.setText("Symptom : "+i);
+            ch.setText(item.getName());
             linearLayout.addView(ch);
+            map.put(ch.getId(),item.getId());
+            final int finalI = i;
+            ch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addOrRemoveCondition(v, finalI);
+                }
+            });
         }
         return view;
+    }
+
+    private void addOrRemoveCondition(View v,int itemIndex) {
+        //responseJSONInfermedica.getQuestion().getItems().get(itemIndex).getId();
+        String condtionId = map.get(v.getId());
+        boolean flag = true;
+        for (int i=0;i<conditions.size();i++) {
+            //Log.i(tag,"this is conditions list size : "+conditions.size()+" : "+conditions.get(i).getId());
+            if (conditions.get(i).getId().equals(condtionId)) {
+                conditions.remove(i);
+                flag = false;
+                Condition condition = new Condition();
+                condition.setId(condtionId);
+                condition.setChoiceId("absent");
+                conditions.add(condition);
+                break;
+            }
+        }
+        if(flag){
+            Condition condition = new Condition();
+            condition.setId(condtionId);
+            condition.setChoiceId("present");
+            Log.i(tag,condition.getId());
+            conditions.add(condition);
+            //Log.i(tag,"item added");
+        }
+            mListener.onFragmentInteraction(conditions,3);
     }
 
 
