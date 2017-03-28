@@ -15,7 +15,7 @@ import android.widget.Button;
 
 public class FragmentSignupTwo extends Fragment {
 
-
+    public static final String TAG = FragmentSignupTwo.class.getName();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class FragmentSignupTwo extends Fragment {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
 
                 //transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-                transaction.setCustomAnimations(R.anim.slide_out_left,R.anim.slide_in_right);
+                transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left);
                 transaction.replace(getActivity().findViewById(R.id.activity_register).getId(), new FragmentGender());
                 transaction.addToBackStack(null);
                 transaction.commit();

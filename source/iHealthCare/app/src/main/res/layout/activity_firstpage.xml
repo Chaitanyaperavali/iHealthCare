@@ -20,42 +20,73 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="2"
         android:id="@+id/linearLayout"
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
-        <Button
-            android:id="@+id/signup"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Signup"
-            android:background="@color/colorPrimary"
-            android:padding="12dp"
-            android:onClick="userRegister"
-            android:textSize="18sp"
-            android:layout_margin="1dp"
-            style="@android:style/Widget.Holo.Light.Button"
-            android:fontFamily="sans-serif" />
-
-        <Button
-            android:id="@+id/login"
+            android:gravity="center">
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_btn1"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_btn2"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_btn3"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_btn4"/>
+            </RadioGroup>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:onClick="userLogin"
-            android:background="@color/colorPrimary"
-            android:layout_weight="1"
-            android:padding="12dp"
-            android:layout_margin="1dp"
-            android:text="Login"
-            style="@android:style/Widget.Holo.Light.Button"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif"
-           />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/signup"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Signup"
+                android:background="@color/colorPrimary"
+                android:padding="12dp"
+                android:onClick="userRegister"
+                android:textSize="18sp"
+                android:layout_margin="1dp"
+                style="@android:style/Widget.Holo.Light.Button"
+                android:fontFamily="sans-serif" />
+
+            <Button
+                android:id="@+id/login"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:onClick="userLogin"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:padding="12dp"
+                android:layout_margin="1dp"
+                android:text="Login"
+                style="@android:style/Widget.Holo.Light.Button"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 

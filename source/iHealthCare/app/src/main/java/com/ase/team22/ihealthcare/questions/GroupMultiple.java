@@ -1,17 +1,29 @@
 package com.ase.team22.ihealthcare.questions;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ase.team22.ihealthcare.R;
+import com.ase.team22.ihealthcare.jsonmodel.Choice;
+import com.ase.team22.ihealthcare.jsonmodel.Condition;
+import com.ase.team22.ihealthcare.jsonmodel.Item;
+import com.ase.team22.ihealthcare.jsonmodel.Question;
+import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,14 +34,10 @@ import org.json.JSONObject;
  * create an instance of this fragment.
  */
 public class GroupMultiple extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private JSONObject jsonResponse;
-
+    public static final String tag = "GroupMultiple";
+    private static ResponseJSONInfermedica responseJSONInfermedica;
+    private ArrayList<Condition> conditions = new ArrayList<>();
+    Map<Integer,String> map = new ArrayMap<>();
     private OnFragmentInteractionListener mListener;
 
     public GroupMultiple() {
@@ -42,12 +50,10 @@ public class GroupMultiple extends Fragment {
      *
      * @return A new instance of fragment GroupMultiple.
      */
-    // TODO: Rename and change types and number of parameters
-    public static GroupMultiple newInstance(JSONObject object) {
+    public static GroupMultiple newInstance(ResponseJSONInfermedica object) {
         GroupMultiple fragment = new GroupMultiple();
+        responseJSONInfermedica = object;
         Bundle args = new Bundle();
-        String jsonString = object.toString();
-        args.putString(ARG_PARAM1,jsonString);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,11 +62,11 @@ public class GroupMultiple extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            try {
+            /*try {
                 jsonResponse = new JSONObject(getArguments().getString(ARG_PARAM1));
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 
@@ -68,15 +74,52 @@ public class GroupMultiple extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_group_multiple, container, false);
+        View view = inflater.inflate(R.layout.fragment_group_multiple, container, false);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.checkBox_container);
+        Question question = responseJSONInfermedica.getQuestion();
+        List<Item> items = question.getItems();
+        TextView tv = (TextView) view.findViewById(R.id.multiple_question_group);
+        tv.setText(question.getText());
+        for(int i=0;i<items.size();i++){
+            Item item = items.get(i);
+            CheckBox ch = new CheckBox(getContext());
+            ch.setId(i);
+            ch.setText(item.getName());
+            linearLayout.addView(ch);
+            map.put(ch.getId(),item.getId());
+            //Log.i(tag,map.toString());
+            Condition condition = new Condition();
+            condition.setId(item.getId());
+            condition.setChoiceId("absent");
+            conditions.add(condition);
+            ch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addOrRemoveCondition(v);
+                }
+            });
+        }
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    private void addOrRemoveCondition(View v) {
+        //responseJSONInfermedica.getQuestion().getItems().get(itemIndex).getId();
+        String condtionId = map.get(v.getId());
+        for (int i=0;i<conditions.size();i++) {
+            //Log.i(tag,"this is conditions list size : "+conditions.size()+" : "+conditions.get(i).getId());
+            Condition condition = conditions.get(i);
+            if (condition.getId().equals(condtionId)) {
+                if(condition.getChoiceId().equals("absent")){
+                    condition.setChoiceId("present");
+                }else{
+                    condition.setChoiceId("absent");
+                }
+            }
+            //Log.i(tag,condition.getId()+" : "+condition.getChoiceId());
         }
+        mListener.onFragmentInteraction(conditions,3);
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -106,7 +149,6 @@ public class GroupMultiple extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(ArrayList<Condition> conditions, int identifier);
     }
 }

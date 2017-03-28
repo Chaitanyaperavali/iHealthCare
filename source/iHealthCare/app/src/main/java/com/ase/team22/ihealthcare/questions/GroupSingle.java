@@ -1,21 +1,32 @@
 package com.ase.team22.ihealthcare.questions;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.ase.team22.ihealthcare.R;
+import com.ase.team22.ihealthcare.jsonmodel.Choice;
+import com.ase.team22.ihealthcare.jsonmodel.Condition;
+import com.ase.team22.ihealthcare.jsonmodel.Item;
+import com.ase.team22.ihealthcare.jsonmodel.Question;
+import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,15 +37,13 @@ import org.json.JSONObject;
  * create an instance of this fragment.
  */
 public class GroupSingle extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "jsonResponse";
 
-    // TODO: Rename and change types of parameters
-   private JSONObject jsonResponse;
+    public static final String tag =  "GroupSingle";
     private RadioGroup radioGroup;
     private OnFragmentInteractionListener mListener;
-
+    private ArrayList<Condition> conditions = new ArrayList<>();
+    private static ResponseJSONInfermedica responseJSONInfermedica;
+    private Map<Integer,String> map = new ArrayMap<>();
     public GroupSingle() {
         // Required empty public constructor
     }
@@ -45,12 +54,10 @@ public class GroupSingle extends Fragment {
      *
      * @return A new instance of fragment GroupSingle.
      */
-    // TODO: Rename and change types and number of parameters
-    public static GroupSingle newInstance(JSONObject object) {
+    public static GroupSingle newInstance(ResponseJSONInfermedica object) {
         GroupSingle fragment = new GroupSingle();
-        String jsonString = object.toString();
+        responseJSONInfermedica = object;
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1,jsonString);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,44 +65,44 @@ public class GroupSingle extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            try {
-                jsonResponse = new JSONObject(getArguments().getString(ARG_PARAM1));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_group_single, container, false);
-        int totalOptions = 0;
-        try {
-            radioGroup = (RadioGroup) getView().findViewById(R.id.radio_group);
+        final View view = inflater.inflate(R.layout.fragment_group_single, container, false);
+            int totalOptions = 0;
+            radioGroup = (RadioGroup)view.findViewById(R.id.radio_group);
+            TextView qst = (TextView)view.findViewById(R.id.multiple_question_single);
             radioGroup.setOrientation(LinearLayout.VERTICAL);
-            JSONObject options = (JSONObject) jsonResponse.getJSONObject("question").getJSONArray("items").get(0);
-            JSONArray jsonArray = (JSONArray) options.getJSONArray("choices");
-            totalOptions = jsonArray.length();
+            final Question question = responseJSONInfermedica.getQuestion();
+            qst.setText(question.getText());
+            final List<Item> items = question.getItems();;
+            totalOptions = items.size();
             for(int i=0;i<totalOptions;i++){
                 RadioButton rb = new RadioButton(getContext());
-                rb.setId(i);
-                rb.setText(((JSONObject)jsonArray.get(i)).get("label").toString());
+                //rb.setId(i);
+                rb.setText(items.get(i).getName());
                 radioGroup.addView(rb);
+                map.put(rb.getId(),items.get(i).getId());
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return view;
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    String conditionID = map.get(checkedId);
+                    Condition condition = new Condition();
+                    condition.setId(conditionID);
+                    condition.setChoiceId("present");
+                    if(conditions.size()>1){
+                        conditions.remove(0);
+                    }
+                    conditions.add(condition);
+                   // Log.i(tag,conditions.size()+"");
+                    mListener.onFragmentInteraction(conditions,2);
+                }
+            });
+        return view;
     }
 
     @Override
@@ -126,7 +133,6 @@ public class GroupSingle extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(ArrayList<Condition> options, int identifier);
     }
 }

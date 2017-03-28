@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "951476291262",
+    "firebase_url": "https://ihealthcare-f854a.firebaseio.com",
+    "project_id": "ihealthcare-f854a",
+    "storage_bucket": "ihealthcare-f854a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951476291262:android:f032d582162e7bdc",
+        "android_client_info": {
+          "package_name": "com.ase.team22.ihealthcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951476291262-dda23e92sqstb4l05jrv0eis5ep40l9m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ase.team22.ihealthcare",
+            "certificate_hash": "22f44e0b767b673e0fe3ce185365da47323e7d11"
+          }
+        },
+        {
+          "client_id": "951476291262-cat6ec6rgaj1te7qftbq127qg42qcs08.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_3BgJav_6UNF7ZPa1d7XRVfe6ZWDcR4Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951476291262-cat6ec6rgaj1te7qftbq127qg42qcs08.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

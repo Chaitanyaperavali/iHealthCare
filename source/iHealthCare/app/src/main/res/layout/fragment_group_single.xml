@@ -1,46 +1,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.ase.team22.ihealthcare.questions.GroupSingle">
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/single_question"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Group single type question comes here"
-        android:textColor="@color/primary_dark"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:layout_marginTop="100dp"
-        />
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:gravity="left"
-        android:id="@+id/radio_group"
-        android:layout_marginLeft="20dp">
-
-    </RadioGroup>
-
-    <Button
-        android:text="Next"
-        android:layout_width="100dp"
+        android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:layout_marginRight="20dp"
-        android:background="@color/md_blue_600"
+        />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="18dp"
-        android:textColor="@color/md_white_1000"
-        android:layout_gravity="right"
-        android:id="@+id/btn_next"
-
-        android:onClick=""/>
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/md_amber_100">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/multiple_question_single"
+                android:text="Group single type question comes here"
+                android:textColor="@color/primary_dark"
+                android:textSize="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="10dp"
+                android:gravity="left"
+                />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/radio_group"
+                android:gravity="left"
+                android:layout_marginBottom="25dp">
+            </RadioGroup>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

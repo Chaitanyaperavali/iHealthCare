@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
 
 public class FragmentSignupOne extends Fragment {
 
-
+    public static final String TAG = FragmentSignupOne.class.getName();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class FragmentSignupOne extends Fragment {
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
 
 //                Pattern p;
 //                Matcher m;
