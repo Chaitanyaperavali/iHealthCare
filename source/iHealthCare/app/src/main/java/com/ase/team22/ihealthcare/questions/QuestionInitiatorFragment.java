@@ -47,7 +47,6 @@ public class QuestionInitiatorFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment QuestionInitiatorFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static QuestionInitiatorFragment newInstance(String param1, String param2) {
         QuestionInitiatorFragment fragment = new QuestionInitiatorFragment();
         Bundle args = new Bundle();
@@ -123,7 +122,6 @@ public class QuestionInitiatorFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(ArrayList<Condition> conditions, int identifier);
     }
 

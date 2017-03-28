@@ -28,13 +28,10 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class Single extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     public static final String tag = "Single";
     private ArrayList<Condition> conditions = new ArrayList<>();
-
-    // TODO: Rename and change types of parameters to view that hold question and options
     private static ResponseJSONInfermedica responseJSONInfermedica;
     private String selectedAnswer;
     private RadioButton radioButton ;
@@ -50,7 +47,6 @@ public class Single extends Fragment {
      * this fragment using the provided parameters.
      * @return A new instance of fragment Single.
      */
-    // TODO: Rename and change types and number of parameters
     public static Single newInstance(ResponseJSONInfermedica result) {
         Single fragment = new Single();
         responseJSONInfermedica = result;
@@ -132,7 +128,6 @@ public class Single extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(ArrayList<Condition> options, int identifier);
     }
 

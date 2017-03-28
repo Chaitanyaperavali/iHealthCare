@@ -39,7 +39,6 @@ import java.util.Map;
 public class GroupSingle extends Fragment {
 
     public static final String tag =  "GroupSingle";
-    // TODO: Rename and change types of parameters
     private RadioGroup radioGroup;
     private OnFragmentInteractionListener mListener;
     private ArrayList<Condition> conditions = new ArrayList<>();
@@ -55,7 +54,6 @@ public class GroupSingle extends Fragment {
      *
      * @return A new instance of fragment GroupSingle.
      */
-    // TODO: Rename and change types and number of parameters
     public static GroupSingle newInstance(ResponseJSONInfermedica object) {
         GroupSingle fragment = new GroupSingle();
         responseJSONInfermedica = object;
@@ -135,7 +133,6 @@ public class GroupSingle extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(ArrayList<Condition> options, int identifier);
     }
 }
