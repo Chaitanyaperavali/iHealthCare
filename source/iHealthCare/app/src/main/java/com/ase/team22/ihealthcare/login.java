@@ -85,8 +85,9 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     public void userLogin(View v) {
         if (v.getId() == R.id.login) {
-            //TODO - Implement authentication of user against registered details.
+            //TODO - Validate user proided details against user details in database(Navya)
             Intent i = new Intent(login.this, Home.class);
+            //TODO - if matched store user details in othermodel.UserDetails object and pass as extra in intent to home activity(Navya)
             startActivity(i);
         }
 

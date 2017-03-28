@@ -34,10 +34,7 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class GroupMultiple extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String tag = "GroupMultiple";
-    // TODO: Rename and change types of parameters
     private static ResponseJSONInfermedica responseJSONInfermedica;
     private ArrayList<Condition> conditions = new ArrayList<>();
     Map<Integer,String> map = new ArrayMap<>();
@@ -53,7 +50,6 @@ public class GroupMultiple extends Fragment {
      *
      * @return A new instance of fragment GroupMultiple.
      */
-    // TODO: Rename and change types and number of parameters
     public static GroupMultiple newInstance(ResponseJSONInfermedica object) {
         GroupMultiple fragment = new GroupMultiple();
         responseJSONInfermedica = object;
@@ -87,45 +83,41 @@ public class GroupMultiple extends Fragment {
         for(int i=0;i<items.size();i++){
             Item item = items.get(i);
             CheckBox ch = new CheckBox(getContext());
+            ch.setId(i);
             ch.setText(item.getName());
             linearLayout.addView(ch);
             map.put(ch.getId(),item.getId());
-            final int finalI = i;
+            //Log.i(tag,map.toString());
+            Condition condition = new Condition();
+            condition.setId(item.getId());
+            condition.setChoiceId("absent");
+            conditions.add(condition);
             ch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addOrRemoveCondition(v, finalI);
+                    addOrRemoveCondition(v);
                 }
             });
         }
         return view;
     }
 
-    private void addOrRemoveCondition(View v,int itemIndex) {
+    private void addOrRemoveCondition(View v) {
         //responseJSONInfermedica.getQuestion().getItems().get(itemIndex).getId();
         String condtionId = map.get(v.getId());
-        boolean flag = true;
         for (int i=0;i<conditions.size();i++) {
             //Log.i(tag,"this is conditions list size : "+conditions.size()+" : "+conditions.get(i).getId());
-            if (conditions.get(i).getId().equals(condtionId)) {
-                conditions.remove(i);
-                flag = false;
-                Condition condition = new Condition();
-                condition.setId(condtionId);
-                condition.setChoiceId("absent");
-                conditions.add(condition);
-                break;
+            Condition condition = conditions.get(i);
+            if (condition.getId().equals(condtionId)) {
+                if(condition.getChoiceId().equals("absent")){
+                    condition.setChoiceId("present");
+                }else{
+                    condition.setChoiceId("absent");
+                }
             }
+            //Log.i(tag,condition.getId()+" : "+condition.getChoiceId());
         }
-        if(flag){
-            Condition condition = new Condition();
-            condition.setId(condtionId);
-            condition.setChoiceId("present");
-            Log.i(tag,condition.getId());
-            conditions.add(condition);
-            //Log.i(tag,"item added");
-        }
-            mListener.onFragmentInteraction(conditions,3);
+        mListener.onFragmentInteraction(conditions,3);
     }
 
 
@@ -157,7 +149,6 @@ public class GroupMultiple extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(ArrayList<Condition> conditions, int identifier);
     }
 }

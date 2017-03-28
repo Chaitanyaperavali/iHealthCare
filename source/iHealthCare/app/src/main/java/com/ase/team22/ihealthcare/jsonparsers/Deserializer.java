@@ -2,6 +2,7 @@ package com.ase.team22.ihealthcare.jsonparsers;
 
 import android.util.Log;
 
+import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONBetterDoctor;
 import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,5 +20,10 @@ public class Deserializer {
         //Log.i(tag,response.toString());
         ResponseJSONInfermedica responseJSON = gson.fromJson(response,ResponseJSONInfermedica.class);
         return responseJSON;
+    }
+    //TODO- create a static method in this class to parse JSON string from BetterDoctorAPI and map to java class. refer above method(Sindhu,Navya)
+    public static ResponseJSONBetterDoctor parseFromBDApiResponse(String response){
+
+        return null;
     }
 }

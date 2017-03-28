@@ -12,7 +12,7 @@ public class ResponseJSONInfermedica {
     private Question question;
     @SerializedName("conditions")
     @Expose
-    private List<Object> conditions = null;
+    private List<ResponseCondition> conditions = null;
     @SerializedName("extras")
     @Expose
     private Extras_ extras;
@@ -25,11 +25,11 @@ public class ResponseJSONInfermedica {
         this.question = question;
     }
 
-    public List<Object> getConditions() {
+    public List<ResponseCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(List<Object> conditions) {
+    public void setConditions(List<ResponseCondition> conditions) {
         this.conditions = conditions;
     }
 

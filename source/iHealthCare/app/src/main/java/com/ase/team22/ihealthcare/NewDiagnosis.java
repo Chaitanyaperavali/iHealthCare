@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,9 +14,11 @@ import com.ase.team22.ihealthcare.helpers.InfermedicaRESTClient;
 import com.ase.team22.ihealthcare.jsonmodel.Condition;
 import com.ase.team22.ihealthcare.jsonmodel.Item;
 import com.ase.team22.ihealthcare.jsonmodel.RequestJSONInfermedica;
+import com.ase.team22.ihealthcare.jsonmodel.ResponseCondition;
 import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 import com.ase.team22.ihealthcare.jsonparsers.Deserializer;
 import com.ase.team22.ihealthcare.jsonparsers.Serializer;
+import com.ase.team22.ihealthcare.questions.DiagnosisReport;
 import com.ase.team22.ihealthcare.questions.GroupMultiple;
 import com.ase.team22.ihealthcare.questions.GroupSingle;
 import com.ase.team22.ihealthcare.questions.QuestionInitiatorFragment;
@@ -28,16 +31,18 @@ public class NewDiagnosis extends AppCompatActivity
         implements Single.OnFragmentInteractionListener,
         GroupMultiple.OnFragmentInteractionListener,
         GroupSingle.OnFragmentInteractionListener,
-        QuestionInitiatorFragment.OnFragmentInteractionListener {
-
+        QuestionInitiatorFragment.OnFragmentInteractionListener,
+        DiagnosisReport.OnFragmentInteractionListener
+        {
     private Button nextQuestion;
-    private ArrayList<Condition> conditions = new ArrayList();
+    private ArrayList<Condition> conditions = new ArrayList<>();
+            private ArrayList<Condition> tempConditions;
     private int identifier;
     //private Stack<String> mTransactionStack = new Stack<>();
     private static int tagIdentifier=0;
     //temporary identifiers for testing
-    private int age = 19;
-    private String sex = "male";
+    private int age = 56;
+    private String sex = "female";
     private String[] progress = {"We are Consulting your doctor...","Almost Ready","Done!"};
     private ResponseJSONInfermedica responseJSONInfermedica;
     private RequestJSONInfermedica requestJSONInfermedica;
@@ -65,7 +70,7 @@ public class NewDiagnosis extends AppCompatActivity
         //this is temperory implementation to test navigation and UI rendering
         if(identifier == 0){
             nextQuestion.setVisibility(View.VISIBLE);
-            this.conditions.addAll(conditions);
+            this.conditions = conditions;
             requestJSONInfermedica = new RequestJSONInfermedica();
             requestJSONInfermedica.setAge(this.age);
             requestJSONInfermedica.setSex(this.sex);
@@ -74,11 +79,13 @@ public class NewDiagnosis extends AppCompatActivity
             new ResponseThread().execute(seralizedJSON);
         }
         else if(identifier == 3){
-            this.conditions.addAll(conditions);
+            //this.conditions.clear();
+            enableNextButton();
+            this.tempConditions = conditions;
         }
         else{
             enableNextButton();
-            this.conditions.addAll(conditions);
+            this.tempConditions = conditions;
         }
     }
 
@@ -104,19 +111,6 @@ public class NewDiagnosis extends AppCompatActivity
         transaction.addToBackStack(tag);
         transaction.commit();
 
-        /*getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag(mTransactionStack.peek())).commit();
-        Log.i(this.getClass().getName(),"Stack after first peek: "+mTransactionStack);
-        mTransactionStack.add(Single.tag);
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag(mTransactionStack.pop())).commit();
-                Log.i(this.getClass().getName(),"Stack after first pop : "+mTransactionStack);
-            }
-        }, 1000);*/
-
     }
 
     public void renderGroupSingleQuestionFragment(ResponseJSONInfermedica responseJSONInfermedica){
@@ -130,7 +124,6 @@ public class NewDiagnosis extends AppCompatActivity
         transaction.addToBackStack(tag);
         transaction.commit();
     }
-    // TODO  - Save state instance should be implemented
     public void renderGroupMultipleQuestionFragment(ResponseJSONInfermedica responseJSONInfermedica){
         GroupMultiple groupMultipleQuestionFragment = GroupMultiple.newInstance(responseJSONInfermedica);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -143,38 +136,67 @@ public class NewDiagnosis extends AppCompatActivity
         transaction.commit();
     }
 
-    // TODO - all this impelementaion is temporary. render method should be called based on questiontype in returned json object.
-
     public void getNextQuestion(View view){
-        requestJSONInfermedica = new RequestJSONInfermedica();
-        requestJSONInfermedica.setAge(this.age);
-        requestJSONInfermedica.setSex(this.sex);
-        requestJSONInfermedica.setCondition(this.conditions);
-        String seralizedJSON = Serializer.parseToJSON(requestJSONInfermedica);
-        new ResponseThread().execute(seralizedJSON);
+        boolean continueDiagnosis = false;
+        this.conditions.addAll(tempConditions);
+        tempConditions = null;
+        ResponseCondition responseCondition = responseJSONInfermedica.getConditions().get(0);
+        if(responseJSONInfermedica != null){
+            if(responseCondition.getProbability() <= 0.8 && tagIdentifier<=12){
+                continueDiagnosis = true;
+            }
+            else{
+                getReport(responseCondition);
+            }
+        }
+        if(continueDiagnosis){
+            requestJSONInfermedica = new RequestJSONInfermedica();
+            requestJSONInfermedica.setAge(this.age);
+            requestJSONInfermedica.setSex(this.sex);
+            requestJSONInfermedica.setCondition(this.conditions);
+            String seralizedJSON = Serializer.parseToJSON(requestJSONInfermedica);
+            new ResponseThread().execute(seralizedJSON);
+        }
     }
 
-    private class ResponseThread extends AsyncTask<String, String, String> {
+            private void getReport(ResponseCondition responseCondition) {
+                if(tagIdentifier>12){
+                    //Ask user if user want to continue the diagnosis as we are not able to arrive at final condition
+                    Log.i(this.getClass().getName(),"We reached 12 questions so abandon diagnosis");
+                    onBackPressed();
+                }else
+                {
+                    //We arrived at probable condition... create report to show user.
+                    DiagnosisReport diagnosisReport = DiagnosisReport.newInstance(responseCondition);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left);
+                    tagIdentifier++;
+                    String tag = DiagnosisReport.tag+tagIdentifier;
+                    transaction.replace(R.id.fragment_container, diagnosisReport,tag);
+                    disableNextButton();
+                    transaction.addToBackStack(tag);
+                    transaction.commit();
+                }
+            }
+
+            private class ResponseThread extends AsyncTask<String, String, String> {
         protected String doInBackground(String... request) {
             //to connect to api and fetch JSON.
             InfermedicaRESTClient infermedicaRESTClient = new InfermedicaRESTClient();
-            publishProgress(progress[0]);
             String response = infermedicaRESTClient.continueDiagnosis(request[0]);
-            publishProgress(progress[1]);
                 return response;
             }
 
         protected void onProgressUpdate(String... progress) {
             super.onProgressUpdate(progress);
-            //TODO - keep progress bar spinning and tell user to be patient if it is gonna take time.
+            //TODO - keep progress bar spinning and tell user to be patient if it is gonna take time(Chaitanya)
         }
 
         protected void onPostExecute(String response) {
             renderQuestion(response);
-            //TODO - render page to display next question.
         }
         protected void onPreExecute() {
-            //TODO - set progress bar status here.
+
         }
     }
 
