@@ -43,8 +43,7 @@
                     android:id="@+id/text_LastName"
                     android:hint="Last Name"
                     android:layout_below="@id/text_FirstName"
-                    android:layout_marginTop="30dp"
-                    android:password="true"/>
+                    android:layout_marginTop="30dp" />
 
                 <EditText
                     android:layout_width="wrap_content"

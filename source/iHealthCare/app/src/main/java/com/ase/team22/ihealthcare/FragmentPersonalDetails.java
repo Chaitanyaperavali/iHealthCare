@@ -1,6 +1,7 @@
 package com.ase.team22.ihealthcare;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,8 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
+
+import com.ase.team22.ihealthcare.othermodel.UserRegistration;
 
 
 /**
@@ -19,6 +23,12 @@ import android.widget.NumberPicker;
  */
 public class FragmentPersonalDetails extends Fragment {
 
+
+    private EditText mHeightView;
+
+    private UserRegistration userRegistration;
+
+    private OnFragmentInteractionListener mListener;
 
     public FragmentPersonalDetails() {
         // Required empty public constructor
@@ -35,19 +45,43 @@ public class FragmentPersonalDetails extends Fragment {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                //transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-//                transaction.setCustomAnimations(R.anim.slide_out_left,R.anim.slide_in_right);
-//                transaction.replace(getActivity().findViewById(R.id.activity_register).getId(), new FragmentPersonalDetails());
-//                transaction.commit();
 
-                Intent intent = new Intent(getActivity(),Home.class);
-                startActivity(intent);
+                userRegistration.setDateOfBirth("12/17/1991");
+                userRegistration.setHeight("162");
+                userRegistration.setWeight("65");
+
+                mListener.onFragmentInteraction();
+
+
+
             }
         });
 
         return  view;
     }
 
+    public void setUserInstance(UserRegistration user){
+        this.userRegistration = user;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction();
+    }
 }

@@ -38,8 +38,7 @@
         android:id="@+id/text_Phone"
         android:hint="Phone"
         android:layout_below="@id/text_Email"
-        android:layout_marginTop="30dp"
-        android:password="true"/>
+        android:layout_marginTop="30dp" />
 
     <Button
         android:text="Ok"
