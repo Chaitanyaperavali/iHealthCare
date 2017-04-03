@@ -25,6 +25,7 @@ public class FragmentSignupOne extends Fragment {
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
