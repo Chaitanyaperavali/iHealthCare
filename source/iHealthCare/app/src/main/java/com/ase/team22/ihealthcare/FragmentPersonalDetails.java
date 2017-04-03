@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
@@ -24,9 +25,12 @@ import com.ase.team22.ihealthcare.othermodel.UserRegistration;
 public class FragmentPersonalDetails extends Fragment {
 
 
-    private EditText mHeightView;
-
     private UserRegistration userRegistration;
+
+    private DatePicker datePicker;
+    private int day;
+    private int month;
+    private int year;
 
     private OnFragmentInteractionListener mListener;
 
@@ -41,12 +45,18 @@ public class FragmentPersonalDetails extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_personal_details, container, false);
 
+        datePicker = (DatePicker) view.findViewById(R.id.datePicker_dob);
+
         Button btnOk = (Button) view.findViewById(R.id.btn_ok);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                userRegistration.setDateOfBirth("12/17/1991");
+                day = datePicker.getDayOfMonth();
+                month = datePicker.getMonth();
+                year = datePicker.getYear();
+
+                userRegistration.setDateOfBirth(day+"/"+month+"/"+year);
                 userRegistration.setHeight("162");
                 userRegistration.setWeight("65");
 
