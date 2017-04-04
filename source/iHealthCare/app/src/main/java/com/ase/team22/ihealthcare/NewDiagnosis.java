@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.ase.team22.ihealthcare.helpers.BetterDoctorRESTClient;
 import com.ase.team22.ihealthcare.helpers.InfermedicaRESTClient;
 import com.ase.team22.ihealthcare.jsonmodel.Condition;
 import com.ase.team22.ihealthcare.jsonmodel.Item;
 import com.ase.team22.ihealthcare.jsonmodel.RequestJSONInfermedica;
 import com.ase.team22.ihealthcare.jsonmodel.ResponseCondition;
+import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONBetterDoctor;
 import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 import com.ase.team22.ihealthcare.jsonparsers.Deserializer;
 import com.ase.team22.ihealthcare.jsonparsers.Serializer;
@@ -60,8 +62,6 @@ public class NewDiagnosis extends AppCompatActivity
         transaction.add(R.id.fragment_container, questionInitiatorFragment,tag);
         transaction.addToBackStack(tag);
         transaction.commit();
-
-
     }
 
     @Override
@@ -82,6 +82,19 @@ public class NewDiagnosis extends AppCompatActivity
             //this.conditions.clear();
             enableNextButton();
             this.tempConditions = conditions;
+        }else if(identifier == 4){
+            String condition = conditions.get(0).getId();
+            // TODO - get user current location and assign to lat and lng variables(Chaitanya)
+            String lat = "39.0997270";
+            String lng = "-94.5785670";
+            BetterDoctorRESTClient betterDoctorRESTClient = new BetterDoctorRESTClient();
+            String responseBDResponseJson = betterDoctorRESTClient.getNearByDoctors(condition,lat,lng);
+            ResponseJSONBetterDoctor responseJSONBetterDoctor = Deserializer.parseFromBDApiResponse(responseBDResponseJson);
+            //TODO uncomment below lines of code after making pulling from github(Navya, Sindhu)
+           /* Intent intent = new Intent(this,Mapsactivity.class);
+            intent.putExtra("response_data",responseJSONBetterDoctor);
+            startActivity(intent);*/
+
         }
         else{
             enableNextButton();
@@ -167,6 +180,7 @@ public class NewDiagnosis extends AppCompatActivity
                 }else
                 {
                     //We arrived at probable condition... create report to show user.
+                    nextQuestion.setVisibility(View.INVISIBLE);
                     DiagnosisReport diagnosisReport = DiagnosisReport.newInstance(responseCondition);
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left);

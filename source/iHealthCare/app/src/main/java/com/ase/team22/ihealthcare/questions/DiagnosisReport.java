@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.ase.team22.ihealthcare.R;
@@ -61,10 +62,18 @@ public class DiagnosisReport extends Fragment {
         probabilityTV = (TextView) view.findViewById(R.id.result_probability_sol);
         conditionTV.setText(responseCondition.getName());
         probabilityTV.setText(responseCondition.getProbability()+"");
-        ArrayList<Condition> conditions = new ArrayList<>();
+        final ArrayList<Condition> conditions = new ArrayList<>();
         //TODO - Pass condition to(Chaitanya)
-        //Condition c = new Condition();
-        //conditions.add(c);
+        Condition c = new Condition();
+        c.setId(responseCondition.getName());
+        conditions.add(c);
+        Button btn = (Button) view.findViewById(R.id.btn_doctors_near_by);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(conditions,4);
+            }
+        });
         //TODO - create an intent to connect to BetterDoctorAPI, get required details for this condition and open map activity(Sindhu, Navya)
         return view;
     }
