@@ -43,7 +43,7 @@ public class NewDiagnosis extends AppCompatActivity
     //private Stack<String> mTransactionStack = new Stack<>();
     private static int tagIdentifier=0;
     //temporary identifiers for testing
-    private int age = 56;
+    private int age = 8;
     private String sex = "female";
     private String[] progress = {"We are Consulting your doctor...","Almost Ready","Done!"};
     private ResponseJSONInfermedica responseJSONInfermedica;
@@ -91,9 +91,9 @@ public class NewDiagnosis extends AppCompatActivity
             String responseBDResponseJson = betterDoctorRESTClient.getNearByDoctors(condition,lat,lng);
             ResponseJSONBetterDoctor responseJSONBetterDoctor = Deserializer.parseFromBDApiResponse(responseBDResponseJson);
             //TODO uncomment below lines of code after making pulling from github(Navya, Sindhu)
-           /* Intent intent = new Intent(this,Mapsactivity.class);
+           Intent intent = new Intent(this,MapsActivity.class);
             intent.putExtra("response_data",responseJSONBetterDoctor);
-            startActivity(intent);*/
+            startActivity(intent);
 
         }
         else{
