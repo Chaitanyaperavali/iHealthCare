@@ -28,17 +28,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:datePickerMode="spinner"
-        android:spinnersShown="true"
-        android:calendarViewShown="false"
-        android:id="@+id/datePicker_dob"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/lbl_dob"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:text="Weight"
         android:layout_width="wrap_content"
@@ -71,20 +60,57 @@
         android:layout_alignLeft="@+id/lbl_dob"
         android:layout_alignStart="@+id/lbl_dob" />
 
-    <Button
-        android:text="Ok"
+    <!--<Button-->
+        <!--android:text="Ok"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/btn_ok"-->
+        <!--android:elevation="0dp"-->
+        <!--android:textStyle="normal|bold"-->
+        <!--android:textSize="20dp"-->
+        <!--android:layout_marginBottom="15dp"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:textColor="#FFFFFF"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_toRightOf="@+id/text_weight"-->
+        <!--android:layout_toEndOf="@+id/text_weight" />-->
+
+    <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_ok"
-        android:elevation="0dp"
-        android:textStyle="normal|bold"
-        android:textSize="20dp"
-        android:layout_marginBottom="15dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#FFFFFF"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/text_weight"
-        android:layout_toEndOf="@+id/text_weight" />
+        android:datePickerMode="spinner"
+        android:spinnersShown="true"
+        android:calendarViewShown="false"
+        android:id="@+id/datePicker_dob"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/lbl_dob"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Sign Up"
+        android:id="@+id/lbl_Signup"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:singleLine="false"
+        android:textColor="#415ca0"
+        android:textStyle="normal|bold" />
+
+    <Button
+    android:text="Sign Up"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:id="@+id/button_Signup"
+        style="@style/Widget.AppCompat.Button"
+    android:elevation="0dp"
+    android:background="@color/colorPrimary"
+    android:textStyle="normal"
+    android:textSize="18dp"
+    android:textColor="#FFFFFF"
+        android:layout_below="@+id/text_weight"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

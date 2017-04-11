@@ -9,11 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Gender"
-        android:id="@+id/lbl_Gender"
+        android:text="Sign Up"
+        android:id="@+id/lbl_Signup"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:singleLine="false"
         android:textColor="#415ca0"
         android:textStyle="normal|bold" />
@@ -67,5 +67,18 @@
         android:layout_toEndOf="@+id/lbl_Gender"
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Gender"
+        android:id="@+id/lbl_Gender"
+        android:singleLine="false"
+        android:textColor="#415ca0"
+        android:textStyle="normal|bold"
+        android:layout_above="@+id/img_Female"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="43dp" />
 
 </RelativeLayout>

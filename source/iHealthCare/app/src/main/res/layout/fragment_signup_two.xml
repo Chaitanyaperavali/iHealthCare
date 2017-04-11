@@ -69,20 +69,38 @@
                     android:layout_marginTop="30dp"
                     android:password="true"/>
 
+                <!--<Button-->
+                    <!--android:text="Sign Up"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/text_ConfirmPassword"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:id="@+id/button_Signup"-->
+                    <!--android:layout_marginTop="45dp"-->
+                    <!--style="@style/Widget.AppCompat.Button"-->
+                    <!--android:elevation="0dp"-->
+                    <!--android:background="@color/colorPrimary"-->
+                    <!--android:textStyle="normal"-->
+                    <!--android:textSize="18dp"-->
+                    <!--android:textColor="#FFFFFF"/>-->
+
                 <Button
-                    android:text="Sign Up"
+                    android:text="Ok"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/text_ConfirmPassword"
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/button_Signup"
-                    android:layout_marginTop="45dp"
-                    style="@style/Widget.AppCompat.Button"
-                    android:elevation="0dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginEnd="25dp"
                     android:background="@color/colorPrimary"
-                    android:textStyle="normal"
-                    android:textSize="18dp"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/button_Ok"
+                    android:layout_marginTop="25dp"
+                    android:elevation="0dp"
+                    android:textStyle="normal|bold"
+                    android:textSize="20dp" />
 
                 <TextView
                     android:layout_width="wrap_content"

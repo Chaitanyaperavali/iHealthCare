@@ -2,16 +2,22 @@ package com.ase.team22.ihealthcare;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookActivity;
@@ -30,6 +36,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -40,10 +50,27 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
     CallbackManager callbackManager;
     private int loginKey = -1; //2 for Facebook login, 1 for google login
 
+    private EditText editTextEmail;
+    private  EditText editTextPassword;
+    private ProgressDialog progressDialog;
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        editTextEmail = (EditText) findViewById(R.id.tvemail);
+        editTextPassword = (EditText) findViewById(R.id.tvpsw);
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if(firebaseAuth.getCurrentUser()!=null){
+            Intent i = new Intent(login.this, Home.class);
+            startActivity(i);
+        }
+
         msg = (TextView) findViewById(R.id.tv_msg);
         callbackManager = CallbackManager.Factory.create();
         msg.setVisibility(View.INVISIBLE);
@@ -85,12 +112,77 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     public void userLogin(View v) {
         if (v.getId() == R.id.login) {
-            //TODO - Validate user proided details against user details in database(Navya)
-            Intent i = new Intent(login.this, Home.class);
-            //TODO - if matched store user details in othermodel.UserDetails object and pass as extra in intent to home activity(Navya)
-            startActivity(i);
+            //TODO - Validate user proided details against user details in database(kalyan)
+
+            validateCredentials();
+
         }
 
+    }
+
+    private void validateCredentials() {
+
+        // Reset errors.
+        editTextEmail.setError(null);
+        editTextPassword.setError(null);
+
+        // Store values at the time of the login attempt.
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+
+        boolean cancel = false;
+        View focusView = null;
+
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            editTextEmail.setError(getString(R.string.error_field_required));
+            focusView = editTextEmail;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            editTextEmail.setError(getString(R.string.error_invalid_email));
+            focusView = editTextEmail;
+            cancel = true;
+        }
+
+        // Check for password field.
+        if (TextUtils.isEmpty(password)) {
+            editTextPassword.setError(getString(R.string.error_field_required));
+            focusView = editTextPassword;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            progressDialog.setMessage("Logging User");
+            progressDialog.show();
+
+            firebaseAuth.signInWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if (task.isSuccessful()){
+                                finish();
+                                Intent i = new Intent(login.this, Home.class);
+                                startActivity(i);
+                            }
+                            else{
+                                Toast.makeText(login.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+    private boolean isEmailValid(String email) {
+        //TODO: Replace this with your own logic
+        return email.contains("@");
     }
 
 

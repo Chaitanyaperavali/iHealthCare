@@ -49,7 +49,7 @@ public class FragmentSignupTwo extends Fragment  {
 
         //receiving the email from fragment one
 
-        Button btn = (Button) view.findViewById(R.id.button_Signup);
+        Button btn = (Button) view.findViewById(R.id.button_Ok);
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

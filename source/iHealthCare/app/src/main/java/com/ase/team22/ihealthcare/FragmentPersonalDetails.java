@@ -31,6 +31,8 @@ public class FragmentPersonalDetails extends Fragment {
     private int day;
     private int month;
     private int year;
+    private EditText heightView;
+    private  EditText weightView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -46,8 +48,10 @@ public class FragmentPersonalDetails extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_personal_details, container, false);
 
         datePicker = (DatePicker) view.findViewById(R.id.datePicker_dob);
+        heightView = (EditText) view.findViewById(R.id.text_height);
+        weightView = (EditText) view.findViewById(R.id.text_weight);
 
-        Button btnOk = (Button) view.findViewById(R.id.btn_ok);
+        Button btnOk = (Button) view.findViewById(R.id.button_Signup);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,9 +60,12 @@ public class FragmentPersonalDetails extends Fragment {
                 month = datePicker.getMonth();
                 year = datePicker.getYear();
 
+                String height = heightView.getText().toString().trim();
+                String weight = weightView.getText().toString().trim();
+
                 userRegistration.setDateOfBirth(day+"/"+month+"/"+year);
-                userRegistration.setHeight("162");
-                userRegistration.setWeight("65");
+                userRegistration.setHeight(height);
+                userRegistration.setWeight(weight);
 
                 mListener.onFragmentInteraction();
 
