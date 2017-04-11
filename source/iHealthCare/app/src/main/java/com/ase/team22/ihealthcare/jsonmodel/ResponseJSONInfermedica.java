@@ -13,9 +13,6 @@ public class ResponseJSONInfermedica {
     @SerializedName("conditions")
     @Expose
     private List<ResponseCondition> conditions = null;
-    @SerializedName("extras")
-    @Expose
-    private Extras_ extras;
 
     public Question getQuestion() {
         return question;
@@ -31,14 +28,6 @@ public class ResponseJSONInfermedica {
 
     public void setConditions(List<ResponseCondition> conditions) {
         this.conditions = conditions;
-    }
-
-    public Extras_ getExtras() {
-        return extras;
-    }
-
-    public void setExtras(Extras_ extras) {
-        this.extras = extras;
     }
 
 }

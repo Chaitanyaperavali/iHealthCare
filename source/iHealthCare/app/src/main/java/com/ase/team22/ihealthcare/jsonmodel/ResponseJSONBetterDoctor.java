@@ -1,9 +1,23 @@
+
 package com.ase.team22.ihealthcare.jsonmodel;
 
-/**
- * Created by chaitanya on 27/03/2017.
- */
+import java.io.Serializable;
+import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-//TODO - use this class to map json to object binding dont implement this class..pls give simple JSON response to chaitanya refer RequestJSONInfermedica class for clarity(Sindhu,Navya)
-public class ResponseJSONBetterDoctor {
+public class ResponseJSONBetterDoctor implements Serializable{
+
+    @SerializedName("data")
+    @Expose
+    private List<DoctorsData> data = null;
+
+    public List<DoctorsData> getData() {
+        return data;
+    }
+
+    public void setData(List<DoctorsData> data) {
+        this.data = data;
+    }
+
 }

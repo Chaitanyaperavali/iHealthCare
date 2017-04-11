@@ -24,5 +24,6 @@
 
     <string name="server_client_id">951476291262-cat6ec6rgaj1te7qftbq127qg42qcs08.apps.googleusercontent.com</string>
     <string name="facebook_app_id">384427428580394</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

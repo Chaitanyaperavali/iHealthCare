@@ -16,9 +16,6 @@ public class Question {
     @SerializedName("items")
     @Expose
     private List<Item> items = null;
-    @SerializedName("extras")
-    @Expose
-    private Extras extras;
 
     public String getType() {
         return type;
@@ -43,13 +40,4 @@ public class Question {
     public void setItems(List<Item> items) {
         this.items = items;
     }
-
-    public Extras getExtras() {
-        return extras;
-    }
-
-    public void setExtras(Extras extras) {
-        this.extras = extras;
-    }
-
 }
