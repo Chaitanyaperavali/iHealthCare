@@ -16,6 +16,11 @@
     <string name="drawer_item_collapsing_toolbar_drawer">iHealthCare</string>
     <string name="lorem_ipsum">This is some dummy text written to showup on home page.</string>
     <string name="drawer_item_logout">Logout</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_phone">This phone no. is incorrect</string>
+    <string name="error_invalid_password">Password should be minimum 8 characters</string>
+    <string name="error_invalid_confirmPassword">Should be same as the Password</string>
+    <string name="error_field_required">This field is required</string>
 
     <string name="server_client_id">951476291262-cat6ec6rgaj1te7qftbq127qg42qcs08.apps.googleusercontent.com</string>
     <string name="facebook_app_id">384427428580394</string>
