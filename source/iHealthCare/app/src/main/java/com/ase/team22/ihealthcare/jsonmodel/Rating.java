@@ -8,7 +8,7 @@ public class Rating {
 
     @SerializedName("rating")
     @Expose
-    private int rating;
+    private double rating;
     @SerializedName("review_count")
     @Expose
     private int reviewCount;
@@ -25,7 +25,7 @@ public class Rating {
     @Expose
     private String imageUrlLarge2x;
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 

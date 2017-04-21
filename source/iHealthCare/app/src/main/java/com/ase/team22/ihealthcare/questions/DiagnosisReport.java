@@ -64,14 +64,11 @@ public class DiagnosisReport extends Fragment {
         probabilityTV.setText(responseCondition.getProbability()+"");
         final ArrayList<Condition> conditions = new ArrayList<>();
         //TODO - Pass condition to(Chaitanya)
-        Condition c = new Condition();
-        c.setId(responseCondition.getName());
-        conditions.add(c);
         Button btn = (Button) view.findViewById(R.id.btn_doctors_near_by);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onFragmentInteraction(conditions,4);
+                mListener.onFragmentInteraction(responseCondition.getName(),4);
             }
         });
         //TODO - create an intent to connect to BetterDoctorAPI, get required details for this condition and open map activity(Sindhu, Navya)
@@ -106,6 +103,6 @@ public class DiagnosisReport extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(ArrayList<Condition> options, int identifier);
+        void onFragmentInteraction(String condition, int identifier);
     }
 }
