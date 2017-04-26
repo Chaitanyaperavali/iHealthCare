@@ -80,16 +80,18 @@ public class NewDiagnosis extends AppCompatActivity implements Single.OnFragment
             String lat = "39.0997270";
             String lng = "-94.5785670";
             BetterDoctorRESTClient betterDoctorRESTClient = new BetterDoctorRESTClient();
-            String responseBDResponseJson = betterDoctorRESTClient.getNearByDoctors(condition, lat, lng);
-            ResponseJSONBetterDoctor responseJSONBetterDoctor = Deserializer
-                    .parseFromBDApiResponse(responseBDResponseJson);
-            // TODO uncomment below lines of code after making pulling from
-            // github(Navya, Sindhu)
-			/*
-			 * Intent intent = new Intent(this,Mapsactivity.class);
-			 * intent.putExtra("response_data",responseJSONBetterDoctor);
-			 * startActivity(intent);
-			 */
+            String responseBDResponseJson = betterDoctorRESTClient.getNearByDoctors(condition,lat,lng);
+            ResponseJSONBetterDoctor responseJSONBetterDoctor = Deserializer.parseFromBDApiResponse(responseBDResponseJson);
+            //TODO uncomment below lines of code after making pulling from github(Navya, Sindhu)
+           Intent intent = new Intent(this,MapsActivity.class);
+            intent.putExtra("response_data",responseJSONBetterDoctor);
+            startActivity(intent);
+
+        }
+        else{
+            enableNextButton();
+            this.tempConditions = conditions;
+
         }
     }
 
