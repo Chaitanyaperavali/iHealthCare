@@ -27,6 +27,8 @@ import com.ase.team22.ihealthcare.questions.Single;
 
 import java.util.ArrayList;
 
+import okhttp3.Response;
+
 public class NewDiagnosis extends AppCompatActivity implements Single.OnFragmentInteractionListener,
         GroupMultiple.OnFragmentInteractionListener, GroupSingle.OnFragmentInteractionListener,
         QuestionInitiatorFragment.OnFragmentInteractionListener, DiagnosisReport.OnFragmentInteractionListener {
@@ -76,22 +78,50 @@ public class NewDiagnosis extends AppCompatActivity implements Single.OnFragment
     @Override
     public void onFragmentInteraction(String condition, int identifier) {
         if (identifier == 4) {
-            // TODO - get user current location and assign to lat and lng
-            String lat = "39.0997270";
-            String lng = "-94.5785670";
-            BetterDoctorRESTClient betterDoctorRESTClient = new BetterDoctorRESTClient();
-            String responseBDResponseJson = betterDoctorRESTClient.getNearByDoctors(condition,lat,lng);
-            ResponseJSONBetterDoctor responseJSONBetterDoctor = Deserializer.parseFromBDApiResponse(responseBDResponseJson);
-            //TODO uncomment below lines of code after making pulling from github(Navya, Sindhu)
-           Intent intent = new Intent(this,MapsActivity.class);
-            intent.putExtra("response_data",responseJSONBetterDoctor);
-            startActivity(intent);
+            // TODO - get user current location and assign to lat and lng(Chaitanya)
+            //Log.i(this.getClass().getName(),responseBDResponseJson);
+            String[] con = {condition};
+            new BackgroundNetworkTask().execute(con);
 
         }
         else{
             enableNextButton();
             this.tempConditions = conditions;
 
+        }
+    }
+
+    public void renderMapActivity(String responseBDResponseJson){
+        ResponseJSONBetterDoctor responseJSONBetterDoctor = Deserializer.parseFromBDApiResponse(responseBDResponseJson);
+        if(responseJSONBetterDoctor != null){
+            if(responseJSONBetterDoctor.getData().size()>0){
+                Log.i(this.getClass().getName(),responseJSONBetterDoctor.getData().size()+"");
+                Intent intent = new Intent(this,MapsActivity.class);
+                intent.putExtra("response_data",responseJSONBetterDoctor);
+                startActivity(intent);
+            }
+        }
+    }
+    class BackgroundNetworkTask extends AsyncTask<String, Void, String> {
+
+        private Exception exception;
+
+        protected String doInBackground(String... condition) {
+            try {
+                String lat = "39.0997270";
+                String lng = "-94.5785670";
+                BetterDoctorRESTClient betterDoctorRESTClient = new BetterDoctorRESTClient();
+                String responseBDResponseJson = betterDoctorRESTClient.getNearByDoctors(condition[0],lat,lng);
+                return responseBDResponseJson;
+            } catch (Exception e) {
+                this.exception = e;
+
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String responseBDResponseJson) {
+            renderMapActivity(responseBDResponseJson);
         }
     }
 

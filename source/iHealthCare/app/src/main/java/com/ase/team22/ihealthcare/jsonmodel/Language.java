@@ -4,7 +4,9 @@ package com.ase.team22.ihealthcare.jsonmodel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Language {
+import java.io.Serializable;
+
+public class Language implements Serializable {
 
     @SerializedName("name")
     @Expose

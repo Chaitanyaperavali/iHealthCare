@@ -23,8 +23,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class InfermedicaRESTClient {
     private static final String urlString = " https://api.infermedica.com/v2/diagnosis";
-    private static final String APP_ID = "abf7a79e";
-    private static final String APP_KEY = "d73eccedd05a125e1e386ad7daf5153b";
+    private static final String APP_ID = "214359d0";
+    private static final String APP_KEY = "848b7f4da58ce85ce8e9f23addb3de2d";
     public String continueDiagnosis(String request){
         URL url = null;
         InputStream stream = null;

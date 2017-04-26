@@ -4,7 +4,9 @@ package com.ase.team22.ihealthcare.jsonmodel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Specialty {
+import java.io.Serializable;
+
+public class Specialty implements Serializable {
 
     @SerializedName("uid")
     @Expose
