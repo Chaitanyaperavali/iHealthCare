@@ -22,7 +22,7 @@ public class Deserializer {
     public static ResponseJSONBetterDoctor parseFromBDApiResponse(String response){
         if(response != null){
             Gson gson = new GsonBuilder().create();
-            Log.i(tag,response.toString());
+            //Log.i(tag,response.toString());
             ResponseJSONBetterDoctor responseJSON = gson.fromJson(response,ResponseJSONBetterDoctor.class);
             Log.i(tag,"This is response doctor data : "+responseJSON);
             return responseJSON;

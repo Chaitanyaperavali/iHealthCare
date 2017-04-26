@@ -62,7 +62,6 @@ public class DiagnosisReport extends Fragment {
         probabilityTV = (TextView) view.findViewById(R.id.result_probability_sol);
         conditionTV.setText(responseCondition.getName());
         probabilityTV.setText(responseCondition.getProbability()+"");
-        final ArrayList<Condition> conditions = new ArrayList<>();
         //TODO - Pass condition to(Chaitanya)
         Button btn = (Button) view.findViewById(R.id.btn_doctors_near_by);
         btn.setOnClickListener(new View.OnClickListener() {

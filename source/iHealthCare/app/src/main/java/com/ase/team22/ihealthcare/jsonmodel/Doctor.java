@@ -1,11 +1,12 @@
 
 package com.ase.team22.ihealthcare.jsonmodel;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Doctor {
+public class Doctor implements Serializable{
 
     @SerializedName("lat")
     @Expose
