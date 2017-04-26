@@ -1,5 +1,7 @@
 package com.ase.team22.ihealthcare.jsonparsers;
 
+import android.util.Log;
+
 import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONBetterDoctor;
 import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 import com.google.gson.Gson;
@@ -18,10 +20,13 @@ public class Deserializer {
         return responseJSON;
     }
     public static ResponseJSONBetterDoctor parseFromBDApiResponse(String response){
-
-        Gson gson = new GsonBuilder().create();
-        //Log.i(tag,response.toString());
-        ResponseJSONBetterDoctor responseJSON = gson.fromJson(response,ResponseJSONBetterDoctor.class);
-        return responseJSON;
+        if(response != null){
+            Gson gson = new GsonBuilder().create();
+            Log.i(tag,response.toString());
+            ResponseJSONBetterDoctor responseJSON = gson.fromJson(response,ResponseJSONBetterDoctor.class);
+            Log.i(tag,"This is response doctor data : "+responseJSON);
+            return responseJSON;
+        }
+        return null;
     }
 }

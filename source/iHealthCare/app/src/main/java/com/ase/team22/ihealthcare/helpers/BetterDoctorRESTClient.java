@@ -1,5 +1,6 @@
 package com.ase.team22.ihealthcare.helpers;
 
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -16,8 +17,20 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class BetterDoctorRESTClient {
     public String getNearByDoctors(String condition,String lat,String lng){
-        String urlString = "https://api.betterdoctor.com/2016-03-01/doctors?query="+condition+"&"+
-                "user_location="+lat+"%2C"+lng+"&skip=0&limit=10&user_key=cf2f86f8145deaad67330c38fbce0c56";
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("api.betterdoctor.com")
+                .appendPath("2016-03-01")
+                .appendPath("doctors")
+                .appendQueryParameter("query",condition)
+                .appendQueryParameter("user_location",lat+","+lng)
+                .appendQueryParameter("skip","0")
+                .appendQueryParameter("limit","10")
+                .appendQueryParameter("user_key","cf2f86f8145deaad67330c38fbce0c56").build();
+       /* String urlString = "https://api.betterdoctor.com/2016-03-01/doctors?query="+condition+"&"+
+                "user_location="+lat+"%2C"+lng+"&skip=0&limit=10&user_key=cf2f86f8145deaad67330c38fbce0c56";*/
+        String urlString = builder.toString();
+        Log.i(this.getClass().getName(),urlString);
         URL url = null;
         InputStream stream = null;
         HttpsURLConnection connection = null;
@@ -42,7 +55,7 @@ public class BetterDoctorRESTClient {
             bR.close();
             result = responseStrBuilder.toString();
         }catch (Exception e){
-            Log.e(this.getClass().getName(),e.getMessage()+" at : getNearByDoctors()");
+            //Log.e(this.getClass().getName(),e.getMessage()+" at : getNearByDoctors()");
         }
         finally {
             // Close Stream and disconnect HTTPS connection.
@@ -50,7 +63,7 @@ public class BetterDoctorRESTClient {
                 try {
                     stream.close();
                 } catch (IOException e) {
-                    Log.e(this.getClass().getName(),"Error in closing stream at : getNearByDoctors()");
+                    //Log.e(this.getClass().getName(),"Error in closing stream at : getNearByDoctors()");
                 }
             }
             if (connection != null) {

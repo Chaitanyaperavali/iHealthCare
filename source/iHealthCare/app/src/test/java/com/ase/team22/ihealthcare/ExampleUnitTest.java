@@ -1,5 +1,11 @@
 package com.ase.team22.ihealthcare;
 
+import android.util.Log;
+
+import com.ase.team22.ihealthcare.helpers.BetterDoctorRESTClient;
+import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONBetterDoctor;
+import com.ase.team22.ihealthcare.jsonparsers.Deserializer;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,5 +19,6 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+        //Log.i(this.getClass().getName(),responseJSONBetterDoctor.toString());
     }
 }
