@@ -43,6 +43,7 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -50,16 +51,19 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="24dp">
 
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,17 +77,52 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
+                        android:text="Report"
+
                         android:id="@+id/tv_intro"
                         android:text="Start new Diagnosis"
+
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    <com.jjoe64.graphview.GraphView
+                        android:layout_width="400dp"
+                        android:layout_height="250dp"
+                        android:id="@+id/graph"/>
 
 
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="24dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="24dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Start new Diagnosis"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
+
+
+
 
     </android.support.v4.widget.NestedScrollView>
 
@@ -96,6 +135,7 @@
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end" />-->
 
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_diagnosis"
         android:layout_gravity="right|bottom"
@@ -105,5 +145,7 @@
         android:clickable="true"
         android:onClick="newDiagnosis"
        />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

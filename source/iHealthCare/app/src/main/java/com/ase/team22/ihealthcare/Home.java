@@ -21,6 +21,9 @@ import com.ase.team22.ihealthcare.othermodel.UserDetails;
 import com.bumptech.glide.Glide;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -41,6 +44,10 @@ public class Home extends AppCompatActivity {
 
     private AccountHeader headerResult;
     private Drawer result;
+
+    LineGraphSeries<DataPoint> series;
+
+
     private TextView tvIntro;
     private UserDetails user;
     @Override
@@ -60,6 +67,20 @@ public class Home extends AppCompatActivity {
         setSupportActionBar(toolbar);
         /*CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle(getString(R.string.drawer_item_collapsing_toolbar_drawer));*/
+
+
+        double y,x;
+        x = -5.0;
+        GraphView graph = (GraphView)findViewById(R.id.graph);
+        series = new LineGraphSeries<DataPoint>();
+        for(int j = 0;j< 500; j++)
+        {
+            x= x+0.1;
+            y = Math.sin(x);
+            series.appendData(new DataPoint(x,y),true,500);
+        }
+        graph.addSeries(series);
+
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withCompactStyle(false)
