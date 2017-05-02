@@ -27,6 +27,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -38,6 +39,9 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Home extends AppCompatActivity {
@@ -68,17 +72,24 @@ public class Home extends AppCompatActivity {
         /*CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle(getString(R.string.drawer_item_collapsing_toolbar_drawer));*/
 
+        Map<Integer,Double> map = new HashMap<>();
+        map.put(5,90.0);
+        map.put(4,86.0);
+        map.put(3,72.0);
+        map.put(2,64.0);
+        map.put(1,60.0);
+        map.put(0,45.0);
 
-        double y,x;
-        x = -5.0;
+        double probablilty;
+        int days;
         GraphView graph = (GraphView)findViewById(R.id.graph);
         series = new LineGraphSeries<DataPoint>();
-        for(int j = 0;j< 500; j++)
-        {
-            x= x+0.1;
-            y = Math.sin(x);
-            series.appendData(new DataPoint(x,y),true,500);
+        for(int j=map.size()-1;j>=0;j--){
+            days = -j;
+            probablilty = map.get(j);
+            series.appendData(new DataPoint(days,probablilty),true,50);
         }
+        graph.setTitle("Condition Probability VS Days");
         graph.addSeries(series);
 
         headerResult = new AccountHeaderBuilder()
@@ -149,7 +160,7 @@ public class Home extends AppCompatActivity {
 
     private void fillFab() {
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_diagnosis);
-        fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_plus_circle).actionBar().color(Color.WHITE));
+        fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_plus).actionBar().color(Color.WHITE));
     }
 
     @Override
@@ -165,5 +176,14 @@ public class Home extends AppCompatActivity {
             Intent intent = new Intent(this,NewDiagnosis.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(UserDetails.getActiveUserInstance() == null){
+            FirebaseAuth.getInstance().signOut();
+        }
+
     }
 }
