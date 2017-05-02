@@ -19,6 +19,9 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -36,6 +39,8 @@ public class Home extends AppCompatActivity {
 
     private AccountHeader headerResult;
     private Drawer result;
+    LineGraphSeries<DataPoint> series;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,17 @@ public class Home extends AppCompatActivity {
         /*CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle(getString(R.string.drawer_item_collapsing_toolbar_drawer));*/
 
+        double y,x;
+        x = -5.0;
+        GraphView graph = (GraphView)findViewById(R.id.graph);
+        series = new LineGraphSeries<DataPoint>();
+        for(int j = 0;j< 500; j++)
+        {
+            x= x+0.1;
+            y = Math.sin(x);
+            series.appendData(new DataPoint(x,y),true,500);
+        }
+        graph.addSeries(series);
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withCompactStyle(false)
