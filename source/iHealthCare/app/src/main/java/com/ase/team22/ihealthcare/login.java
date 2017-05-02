@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ase.team22.ihealthcare.othermodel.UserDetails;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
@@ -40,13 +41,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private GoogleApiClient googleApiClient;
     private static final int REQ_CODE = 9001;
     private TextView msg;
-    TextView txtStatus;
+    private String uid;
     CallbackManager callbackManager;
     private int loginKey = -1; //2 for Facebook login, 1 for google login
 
@@ -54,6 +63,7 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private  EditText editTextPassword;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,14 +176,36 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            progressDialog.dismiss();
                             if (task.isSuccessful()){
-                                finish();
-                                Intent i = new Intent(login.this, Home.class);
-                                startActivity(i);
+                                uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                mDatabase = FirebaseDatabase.getInstance().getReference("users/"+uid);
+                                //Log.i(this.getClass().getName(),mDatabase.getKey());
+                                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        //Log.i(this.getClass().getName(),"i am inside on DataChange");
+                                        UserDetails.getActiveUserInstance().setGender(dataSnapshot.child("gender").getValue().toString());
+                                        String d[] = dataSnapshot.child("dateOfBirth").getValue().toString().split("/");
+                                        Log.i(this.getClass().getName(),"i am inside on DataChange"+d[0]+" "+d[1]+" "+d[2]+" string split values. Year :"+Calendar.getInstance().get(Calendar.YEAR));
+                                        UserDetails.getActiveUserInstance().setAge(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(d[2]));
+                                        UserDetails.getActiveUserInstance().setFirstName(dataSnapshot.child("firstName").getValue().toString());
+                                        UserDetails.getActiveUserInstance().setLastName(dataSnapshot.child("lastName").getValue().toString());
+                                        Log.i(this.getClass().getName(),"i am inside on DataChange"+UserDetails.getActiveUserInstance().getAge());
+                                        finish();
+                                        progressDialog.dismiss();
+                                        Intent i = new Intent(login.this, Home.class);
+                                        startActivity(i);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        // ...
+                                    }
+                                });
                             }
                             else{
-                                Toast.makeText(login.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(login.this, "Login failed ! Invalid Email or Password",Toast.LENGTH_LONG).show();
                             }
                         }
                     });
