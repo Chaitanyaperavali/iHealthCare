@@ -4,7 +4,6 @@ package com.ase.team22.ihealthcare;
         import android.os.AsyncTask;
         import android.support.v4.app.FragmentActivity;
         import android.os.Bundle;
-        import android.util.Log;
 
         import com.ase.team22.ihealthcare.helpers.ImageRequestHelper;
         import com.ase.team22.ihealthcare.jsonmodel.DoctorsData;

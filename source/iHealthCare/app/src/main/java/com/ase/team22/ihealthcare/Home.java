@@ -15,13 +15,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.ase.team22.ihealthcare.othermodel.UserDetails;
 import com.bumptech.glide.Glide;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -39,9 +44,12 @@ public class Home extends AppCompatActivity {
 
     private AccountHeader headerResult;
     private Drawer result;
+
     LineGraphSeries<DataPoint> series;
 
 
+    private TextView tvIntro;
+    private UserDetails user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +60,14 @@ public class Home extends AppCompatActivity {
                 FacebookSdk.sdkInitialize(getApplicationContext());
             }
         }
+        user = UserDetails.getActiveUserInstance();
+        tvIntro = (TextView) findViewById(R.id.tv_intro);
+        tvIntro.setText("Welcome "+user.getFirstName()+" "+user.getLastName());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         /*CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle(getString(R.string.drawer_item_collapsing_toolbar_drawer));*/
+
 
         double y,x;
         x = -5.0;
@@ -69,6 +80,7 @@ public class Home extends AppCompatActivity {
             series.appendData(new DataPoint(x,y),true,500);
         }
         graph.addSeries(series);
+
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withCompactStyle(false)
@@ -107,6 +119,7 @@ public class Home extends AppCompatActivity {
                             if (drawerItem.getIdentifier() == 7) {
                                // Log.i(this.getClass().getName(),"login behaviour of facebook in logout method: ");
                                 LoginManager.getInstance().logOut();
+                                FirebaseAuth.getInstance().signOut();
                                 intent = new Intent(Home.this, FirstpageActivity.class);
                             } /*else if (drawerItem.getIdentifier() == 2) {
                                 intent = new Intent(Home.this, ActionBarActivity.class);

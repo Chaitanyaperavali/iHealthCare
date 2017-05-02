@@ -77,7 +77,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:text="Report"
+
+                        android:id="@+id/tv_intro"
+                        android:text="Start new Diagnosis"
+
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
                     <com.jjoe64.graphview.GraphView
                         android:layout_width="400dp"

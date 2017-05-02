@@ -19,6 +19,7 @@ import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONBetterDoctor;
 import com.ase.team22.ihealthcare.jsonmodel.ResponseJSONInfermedica;
 import com.ase.team22.ihealthcare.jsonparsers.Deserializer;
 import com.ase.team22.ihealthcare.jsonparsers.Serializer;
+import com.ase.team22.ihealthcare.othermodel.UserDetails;
 import com.ase.team22.ihealthcare.questions.DiagnosisReport;
 import com.ase.team22.ihealthcare.questions.GroupMultiple;
 import com.ase.team22.ihealthcare.questions.GroupSingle;
@@ -26,6 +27,7 @@ import com.ase.team22.ihealthcare.questions.QuestionInitiatorFragment;
 import com.ase.team22.ihealthcare.questions.Single;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import okhttp3.Response;
 
@@ -37,8 +39,7 @@ public class NewDiagnosis extends AppCompatActivity implements Single.OnFragment
     private ArrayList<Condition> tempConditions;
     private int identifier;
     private static int tagIdentifier = 0;
-    private int age = 56;
-    private String sex = "female";
+    private UserDetails userDetails;
     private String[] progress = { "We are Consulting your doctor...", "Almost Ready", "Done!" };
     private ResponseJSONInfermedica responseJSONInfermedica;
     private RequestJSONInfermedica requestJSONInfermedica;
@@ -55,6 +56,7 @@ public class NewDiagnosis extends AppCompatActivity implements Single.OnFragment
         transaction.add(R.id.fragment_container, questionInitiatorFragment, tag);
         transaction.addToBackStack(tag);
         transaction.commit();
+        userDetails = UserDetails.getActiveUserInstance();
     }
 
     @Override
@@ -64,8 +66,9 @@ public class NewDiagnosis extends AppCompatActivity implements Single.OnFragment
             nextQuestion.setVisibility(View.VISIBLE);
             this.conditions = conditions;
             requestJSONInfermedica = new RequestJSONInfermedica();
-            requestJSONInfermedica.setAge(this.age);
-            requestJSONInfermedica.setSex(this.sex);
+
+            requestJSONInfermedica.setAge(userDetails.getAge());
+            requestJSONInfermedica.setSex(userDetails.getGender());
             requestJSONInfermedica.setCondition(this.conditions);
             String seralizedJSON = Serializer.parseToJSON(requestJSONInfermedica);
             new ResponseThread().execute(seralizedJSON);
@@ -190,8 +193,9 @@ public class NewDiagnosis extends AppCompatActivity implements Single.OnFragment
         }
         if (continueDiagnosis) {
             requestJSONInfermedica = new RequestJSONInfermedica();
-            requestJSONInfermedica.setAge(this.age);
-            requestJSONInfermedica.setSex(this.sex);
+
+            requestJSONInfermedica.setAge(userDetails.getAge());
+            requestJSONInfermedica.setSex(userDetails.getGender());
             requestJSONInfermedica.setCondition(this.conditions);
             String seralizedJSON = Serializer.parseToJSON(requestJSONInfermedica);
             new ResponseThread().execute(seralizedJSON);
