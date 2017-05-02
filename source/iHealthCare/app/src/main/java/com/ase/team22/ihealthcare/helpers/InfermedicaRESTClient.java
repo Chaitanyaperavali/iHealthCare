@@ -22,10 +22,23 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class InfermedicaRESTClient {
-    private static final String urlString = " https://api.infermedica.com/v2/diagnosis";
+
     private static final String APP_ID = "214359d0";
     private static final String APP_KEY = "848b7f4da58ce85ce8e9f23addb3de2d";
+
     public String continueDiagnosis(String request){
+        String urlString = "https://api.infermedica.com/v2/diagnosis";
+        String result = parseDataFromApi(urlString,request);
+        return result;
+    }
+
+    public String parseNLP(String request){
+        String urlString = "https://api.infermedica.com/v2/parse";
+        String result = parseDataFromApi(urlString,request);
+        return result;
+    }
+
+    private String parseDataFromApi(String urlString,String request){
         URL url = null;
         InputStream stream = null;
         HttpsURLConnection connection = null;
@@ -53,17 +66,17 @@ public class InfermedicaRESTClient {
             if (responseCode != HttpsURLConnection.HTTP_OK) {
                 throw new IOException("HTTP error code: " + responseCode);
             }
-                BufferedReader bR = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line;
+            BufferedReader bR = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
 
-                StringBuilder responseStrBuilder = new StringBuilder();
-                while((line =  bR.readLine()) != null){
+            StringBuilder responseStrBuilder = new StringBuilder();
+            while((line =  bR.readLine()) != null){
 
-                    responseStrBuilder.append(line);
-                }
-                bR.close();
+                responseStrBuilder.append(line);
+            }
+            bR.close();
 
-                result = responseStrBuilder.toString();
+            result = responseStrBuilder.toString();
         }catch (Exception e){
             Log.e(this.getClass().getName(),e.getMessage()+" at : continueDiagnosis()");
         }

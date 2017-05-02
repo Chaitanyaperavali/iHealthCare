@@ -1,6 +1,7 @@
 package com.ase.team22.ihealthcare.questions;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArraySet;
@@ -8,45 +9,41 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.ase.team22.ihealthcare.R;
+import com.ase.team22.ihealthcare.helpers.InfermedicaRESTClient;
 import com.ase.team22.ihealthcare.jsonmodel.Condition;
+import com.ase.team22.ihealthcare.jsonmodel.Mention;
+import com.ase.team22.ihealthcare.jsonmodel.RequestNLP;
+import com.ase.team22.ihealthcare.jsonmodel.ResponseNLPJson;
+import com.ase.team22.ihealthcare.jsonparsers.Deserializer;
+import com.ase.team22.ihealthcare.jsonparsers.Serializer;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link QuestionInitiatorFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link QuestionInitiatorFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class QuestionInitiatorFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static final String tag = "QuestionInitiator";
     private ArrayList<Condition> conditions = new ArrayList<>();
-    Button btn;
+    private Button btn;
+    private Button symptomBtn;
+    private ListView listView;
+    private ArrayList<Mention> mentions = null;
 
     private OnFragmentInteractionListener mListener;
 
     public QuestionInitiatorFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment QuestionInitiatorFragment.
-     */
     public static QuestionInitiatorFragment newInstance(String param1, String param2) {
         QuestionInitiatorFragment fragment = new QuestionInitiatorFragment();
         Bundle args = new Bundle();
@@ -70,20 +67,29 @@ public class QuestionInitiatorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_question_initiator, container, false);
+        listView  = (ListView) view.findViewById(R.id.lv_symptoms_holder);
         btn = (Button) view.findViewById(R.id.btn_next);
         CheckBox cb1 = (CheckBox) view.findViewById(R.id.s_13);
         CheckBox cb2 = (CheckBox) view.findViewById(R.id.s_21);
-        CheckBox cb3 = (CheckBox) view.findViewById(R.id.s_88);
-        CheckBox cb4 = (CheckBox) view.findViewById(R.id.s_98);
-        CheckBox cb5 = (CheckBox) view.findViewById(R.id.s_119);
-        CheckBox cb6 = (CheckBox) view.findViewById(R.id.s_156);
-        CheckBox cb7 = (CheckBox) view.findViewById(R.id.s_241);
-        CheckBox cb8 = (CheckBox) view.findViewById(R.id.s_285);
-        CheckBox cb9 = (CheckBox) view.findViewById(R.id.s_1190);
+        CheckBox cb3 = (CheckBox) view.findViewById(R.id.s_98);
+        CheckBox cb4 = (CheckBox) view.findViewById(R.id.s_241);
+        CheckBox cb5 = (CheckBox) view.findViewById(R.id.s_285);
+        CheckBox cb6 = (CheckBox) view.findViewById(R.id.s_1190);
 
-        CheckBox[] cbs = {cb1,cb2,cb3,cb4,cb5,cb6,cb7,cb8,cb9};
+        CheckBox[] cbs = {cb1,cb2,cb3,cb4,cb5,cb6};
 
         addOnClickListners(cbs);
+        symptomBtn = (Button) view.findViewById(R.id.btn_fetch_symptoms);
+        symptomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText et = (EditText) view.findViewById(R.id.et_symptoms);
+                String text = et.getText().toString();
+                if(text != null){
+                    new NLPparser().execute(text);
+                }
+            }
+        });
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +98,38 @@ public class QuestionInitiatorFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public class NLPparser extends AsyncTask<String,String,ResponseNLPJson>{
+
+        @Override
+        protected ResponseNLPJson doInBackground(String[] params) {
+            RequestNLP requestNLP = new RequestNLP();
+            requestNLP.setText(params[0]);
+            String response = new InfermedicaRESTClient().parseNLP(Serializer.parseToJSON(requestNLP));
+            ResponseNLPJson responseNLPJson =  Deserializer.parseFromInfermedicaNLP(response);
+            return responseNLPJson;
+        }
+
+        @Override
+        protected void onPostExecute(ResponseNLPJson responseNLPJson) {
+           mentions = (ArrayList<Mention>) responseNLPJson.getMentions();
+            createListView();
+        }
+    }
+
+    public void createListView(){
+        if(mentions != null){
+            String[] listItems = new String[mentions.size()];
+
+            for(int i = 0; i < mentions.size(); i++){
+                Mention mention = mentions.get(i);
+                Log.i(tag,i+" : "+mention.getName());
+                listItems[i] = mention.getName();
+            }
+            ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_expandable_list_item_1, listItems);
+            listView.setAdapter(adapter);
+        }
     }
 
     @Override
@@ -111,16 +149,6 @@ public class QuestionInitiatorFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(ArrayList<Condition> conditions, int identifier);
     }
@@ -144,13 +172,7 @@ public class QuestionInitiatorFragment extends Fragment {
                 break;
             case R.id.s_21 : id = "s_21";
                 break;
-            case R.id.s_88 : id = "s_88";
-                break;
             case R.id.s_98 : id = "s_98";
-                break;
-            case R.id.s_119 : id = "s_119";
-                break;
-            case R.id.s_156: id = "s_156";
                 break;
             case R.id.s_241: id = "s_241";
                 break;

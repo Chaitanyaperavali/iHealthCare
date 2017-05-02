@@ -3,64 +3,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ase.team22.ihealthcare.FragmentPersonalDetails">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:ems="10"
+            android:layout_below="@+id/textView7"
+            android:layout_alignLeft="@+id/datePicker_dob"
+            android:layout_alignStart="@+id/datePicker_dob"
+            android:layout_marginTop="19dp"
+            android:id="@+id/text_height"
+            android:hint="Height in cms" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberSigned"
-        android:ems="10"
-        android:layout_below="@+id/textView7"
-        android:layout_alignLeft="@+id/datePicker_dob"
-        android:layout_alignStart="@+id/datePicker_dob"
-        android:layout_marginTop="19dp"
-        android:id="@+id/text_height"
-        android:hint="Height in cms" />
+        <TextView
+            android:text="Date Of Birth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="53dp"
+            android:id="@+id/lbl_dob"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:text="Date Of Birth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="53dp"
-        android:id="@+id/lbl_dob"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:text="Weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_height"
+            android:layout_alignLeft="@+id/textView7"
+            android:layout_alignStart="@+id/textView7"
+            android:layout_marginTop="23dp"
+            android:id="@+id/lbl_weight" />
 
-    <TextView
-        android:text="Weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_height"
-        android:layout_alignLeft="@+id/textView7"
-        android:layout_alignStart="@+id/textView7"
-        android:layout_marginTop="23dp"
-        android:id="@+id/lbl_weight" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_below="@+id/lbl_weight"
+            android:layout_alignRight="@+id/text_height"
+            android:layout_alignEnd="@+id/text_height"
+            android:layout_marginTop="25dp"
+            android:id="@+id/text_weight"
+            android:hint="Weight in Pounds" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_below="@+id/lbl_weight"
-        android:layout_alignRight="@+id/text_height"
-        android:layout_alignEnd="@+id/text_height"
-        android:layout_marginTop="25dp"
-        android:id="@+id/text_weight"
-        android:hint="Weight in Pounds" />
+        <TextView
+            android:text="Height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/textView7"
+            android:layout_below="@+id/datePicker_dob"
+            android:layout_alignLeft="@+id/lbl_dob"
+            android:layout_alignStart="@+id/lbl_dob" />
 
-    <TextView
-        android:text="Height"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/textView7"
-        android:layout_below="@+id/datePicker_dob"
-        android:layout_alignLeft="@+id/lbl_dob"
-        android:layout_alignStart="@+id/lbl_dob" />
-
-    <!--<Button-->
+        <!--<Button-->
         <!--android:text="Ok"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
@@ -75,42 +80,46 @@
         <!--android:layout_toRightOf="@+id/text_weight"-->
         <!--android:layout_toEndOf="@+id/text_weight" />-->
 
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:datePickerMode="spinner"
-        android:spinnersShown="true"
-        android:calendarViewShown="false"
-        android:id="@+id/datePicker_dob"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/lbl_dob"
-        android:layout_centerHorizontal="true" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Sign Up"
-        android:id="@+id/lbl_Signup"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:singleLine="false"
-        android:textColor="#415ca0"
-        android:textStyle="normal|bold" />
+        <DatePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true"
+            android:calendarViewShown="false"
+            android:id="@+id/datePicker_dob"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/lbl_dob"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sign Up"
+            android:id="@+id/lbl_Signup"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:singleLine="false"
+            android:textColor="#415ca0"
+            android:textStyle="normal|bold" />
 
-    <Button
-    android:text="Sign Up"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-        android:id="@+id/button_Signup"
-        style="@style/Widget.AppCompat.Button"
-    android:elevation="0dp"
-    android:background="@color/colorPrimary"
-    android:textStyle="normal"
-    android:textSize="18dp"
-    android:textColor="#FFFFFF"
-        android:layout_below="@+id/text_weight"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:text="Sign Up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_Signup"
+            style="@style/Widget.AppCompat.Button"
+            android:elevation="0dp"
+            android:background="@color/colorPrimary"
+            android:textStyle="normal"
+            android:textSize="18dp"
+            android:textColor="#FFFFFF"
+            android:layout_below="@+id/text_weight"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+</ScrollView>
+
 
 
 </RelativeLayout>
